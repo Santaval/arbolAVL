@@ -1,5 +1,6 @@
 // Copyright <year> <You>
 #include <iostream>
+#include "Tree.hpp"
 
 /**
  * @brief Start program execution.
@@ -7,8 +8,16 @@
  * @return Status code to the operating system, 0 means success.
  */
 int main() {
-  // TODO(you): Analyze the problem and be sure you understand each piece of
-  // input and output. Solve the problem by creating an algorithm, and test it.
-  // Copy the algorithm within source code comments. Finally implement the
-  // algorithm's instructions in the C applying good programming practices.
+  Tree tree = Tree();
+  tree.insert(5);
+  tree.insert(3);
+  tree.insert(7);
+
+  std::cout << "Tree contains 3: " << tree.contains(3) << std::endl;
+
+  tree.erase(3);
+
+  std::cout << "Tree contains 3: " << tree.contains(3) << std::endl;
+
+  std::cout << "Tree contains 5: " << tree.contains(5) << std::endl;
 }
