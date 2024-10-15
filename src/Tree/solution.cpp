@@ -1,4 +1,5 @@
 // Copyright <year> <You>
+#ifdef 0
 #include <iostream>
 #include "Tree.hpp"
 
@@ -21,3 +22,4 @@ int main() {
 
   std::cout << "Tree contains 5: " << tree.contains(5) << std::endl;
 }
+#endif
