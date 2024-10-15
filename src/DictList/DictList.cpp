@@ -49,3 +49,35 @@ bool DictList::contains(int element) {
     // If element not found
     return false;
 }
+
+void DictList::erase(int element) {
+    Node* current = head;
+    Node* previous = nullptr;
+
+    // If the list is empty
+    if (current == nullptr) {
+        return;
+    }
+
+    // If the element to erase is the head
+    if (current->element == element) {
+        head = head->next;
+        delete current;
+        return;
+    }
+
+    // Search for the node to remove
+    while (current != nullptr && current->element != element) {
+        previous = current;
+        current = current->next;
+    }
+
+    // If the element do not exist
+    if (current == nullptr) {
+        return;
+    }
+
+    // Fix links and delele node
+    previous->next = current->next;
+    delete current;
+}
