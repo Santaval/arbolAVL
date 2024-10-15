@@ -83,3 +83,20 @@ void DictList::erase(int element) {
   previous->next = current->next;
   delete current;
 }
+
+std::string DictList::toString() const {
+  Node* current = head;
+  std::string result = "";
+  
+  while (current != nullptr) {
+    result += std::to_string(current->key) + ": " + std::to_string(
+        current->element) + "\n";
+    current = current->next;
+  }
+
+  if (result.empty()) {
+    return "There are no elements in the dictionary\n";
+  }
+
+  return result;
+}
