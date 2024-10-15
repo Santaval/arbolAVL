@@ -12,7 +12,7 @@ class Bin {
     protected:
         /**
          * @struct Node
-         * @brief Represents a node in an AVL tree.
+         * @brief Represents a node in an binary tree.
          * 
          * This structure defines a node in an AVL tree, which contains the data and pointers to the left and right child nodes.
          * 
