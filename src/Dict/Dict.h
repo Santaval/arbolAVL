@@ -4,29 +4,29 @@
 
 class Dict {
  public:
-  // Pure virtual method to insert a value
+  // Pure virtual method to insert an element
   /**
-   * Requires: An integer value.
-   * Effects: Inserts the value into the dictionary.
+   * Requires: An integer element.
+   * Effects: Inserts the element into the dictionary.
    * Modifies: The structure of the dictionary.
    */
-  virtual void insert(int value) = 0;
+  virtual void insert(int element) = 0;
 
-  // Pure virtual method to check if a value is in the dictionary
+  // Pure virtual method to check if a element is in the dictionary
   /**
-   * Requires: An integer value.
-   * Effects: Checks if the value is present in the dictionary.
+   * Requires: An integer element.
+   * Effects: Checks if the element is present in the dictionary.
    * Modifies: Nothing.
    */
-  virtual bool contains(int value) = 0;
+  virtual bool contains(int element) = 0;
 
-  // Pure virtual method to remove a value from the dictionary
+  // Pure virtual method to remove a element from the dictionary
   /**
-   * Requires: An integer value.
-   * Effects: Removes the value from the dictionary if found.
+   * Requires: An integer element.
+   * Effects: Removes the element from the dictionary if found.
    * Modifies: The structure of the dictionary.
    */
-  virtual void erase(int value) = 0;
+  virtual void erase(int element) = 0;
 
   // Virtual destructor
   /**
