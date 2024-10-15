@@ -5,7 +5,9 @@
 #include <iostream>
 #include <string>
 
-class DictList {
+#include "../Dict/Dict.h"
+
+class DictList : public Dict{
  private:
   // Node structure of the singly linked list
   struct Node {
@@ -35,7 +37,7 @@ class DictList {
    * generated for the value.
    * Modifies: The list, by inserting a new node with an auto-generated key.
    */
-  void insert(int element);
+  void insert(int element) override;
 
   // Search for a value associated with a key and determintaet if exist
   /**
@@ -43,7 +45,7 @@ class DictList {
    * Effects: Returns a boolean value depending if the element exist or not
    * Modifies: Nothing.
    */
-  bool contains(int element);
+  bool contains(int element) override;
 
   // Remove a value
   /**
@@ -52,7 +54,7 @@ class DictList {
    *          value is not found, prints an error message.
    * Modifies: The list, by removing a node if the value is found.
    */
-  void erase(int element);
+  void erase(int element) override;
 
   // Return a string representation of the dictionary
   /**
