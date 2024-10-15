@@ -24,14 +24,14 @@
 
 // Comment and uncomment as necessary
 #include "./DictList/DictList.hpp"
-// #include "./BynaryTree/BynaryTree.hpp"
-// #include "./AVLTree/AVLTree.hpp"
+// #include "../DictBynaryTree/DictBynaryTree.hpp"
+// #include "../DictAVLTree/DictAVLTree.hpp"
 
 int main() {
   // Comment and uncomment as necessary
   DictList dict;
-  // BynaryTree dict;
-  // AVLTree dict;
+  // DictBynaryTree dict;
+  // DictAVLTree dict;
 
   // Insert elements
   int elementsToInsert[6] = {7, 0, -3, 1, 21, 4};
