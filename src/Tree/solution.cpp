@@ -1,5 +1,5 @@
 // Copyright <year> <You>
-#ifdef 0
+#if 0
 #include <iostream>
 #include "Tree.hpp"
 
