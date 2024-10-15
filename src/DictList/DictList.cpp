@@ -1,3 +1,4 @@
+// Copyright 2024 Randall Araya. ECCI-UCR. CC BY 4.0
 #include "DictList.hpp"
 
 // Node constructor
@@ -87,7 +88,7 @@ void DictList::erase(int element) {
 std::string DictList::toString() const {
   Node* current = head;
   std::string result = "";
-  
+
   while (current != nullptr) {
     result += std::to_string(current->key) + ": " + std::to_string(
         current->element) + "\n";
