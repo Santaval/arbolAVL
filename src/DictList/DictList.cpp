@@ -100,3 +100,12 @@ std::string DictList::toString() const {
 
   return result;
 }
+
+DictList::~DictList() {
+  Node* current = head;
+  while (current != nullptr) {
+    Node* next = current->next;
+    delete current;
+    current = next;
+  }
+}
