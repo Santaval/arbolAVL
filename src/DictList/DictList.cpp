@@ -1,7 +1,8 @@
 #include "DictList.hpp"
 
 // Node constructor
-DictList::Node::Node(int key, int value) : key(key), element(value), next(nullptr) {}
+DictList::Node::Node(int key, int element) : key(key), element(element),
+        next(nullptr) {}
 
 // List constructor
 DictList::DictList() : head(nullptr), nextKey(0) {}
@@ -28,8 +29,23 @@ void DictList::insert(int element) {
     while (current->next != nullptr && current->next->element < element) {
         current = current->next;
     }
-
-    // Insert the new node
     newNode->next = current->next;
     current->next = newNode;
+}
+
+bool DictList::contains(int element) {
+    // Starting searching from the head
+    Node* current = head;
+
+    // Traversig the list until find the element or end the list
+    while (current != nullptr) {
+        if (current->element == element) {
+            // If element found
+            return true;
+        }
+        current = current->next;
+    }
+
+    // If element not found
+    return false;
 }
