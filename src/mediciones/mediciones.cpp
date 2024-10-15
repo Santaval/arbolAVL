@@ -43,11 +43,11 @@ void triplMeasureTime(Dict& dict, std::shared_ptr<int[]> array, unsigned int
 
     // Output the time taken for each operation in the current iteration
     std::cout << "Time taken to insert iteration: " << i << " = " << insertTime
-        << std::endl;
+        << "ms" << std::endl;
     std::cout << "Time taken to search iteration: " << i << " = " <<
-        containsTime << std::endl;;
+        containsTime << "ms" << std::endl;;
     std::cout << "Time taken to delete iteration: " << i << " = " << eraseTime
-        << std::endl;
+        << "ms" << std::endl;
 
     // Accumulate the times for calculating the average later
     insertTotalTime += insertTime;
@@ -56,9 +56,12 @@ void triplMeasureTime(Dict& dict, std::shared_ptr<int[]> array, unsigned int
   }
 
   // Output the average time for each operation (insert, contains, erase)
-  std::cout << "Average insert time: " << insertTotalTime / 3 << std::endl;;
-  std::cout << "Average search time: " << containsTotalTime / 3 << std::endl;;
-  std::cout << "Average delete time: " << eraseTotalTime / 3 << std::endl;;
+  std::cout << "Average insert time: " << insertTotalTime / 3 << "ms" <<
+      std::endl;;
+  std::cout << "Average search time: " << containsTotalTime / 3 << "ms" <<
+      std::endl;;
+  std::cout << "Average delete time: " << eraseTotalTime / 3 << "ms" <<
+      std::endl;;
 }
 
 
