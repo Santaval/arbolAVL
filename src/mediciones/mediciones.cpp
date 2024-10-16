@@ -109,6 +109,8 @@ void runMeasurements(Dict& dict, const int (&sizes)[lenSizes]) {
   }
 }
 
+#ifndef TEST
+
 int main() {
   // The array defines different sizes of data to be inserted, searched, and
       // deleted in each dictionary.
@@ -129,5 +131,7 @@ int main() {
 
   return 0;
 }
+
+#endif // TEST
 
 #endif // MEDICACIONES_CPP
