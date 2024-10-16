@@ -1,12 +1,17 @@
 // Copyright 2024 Randall Araya. ECCI-UCR. CC BY 4.0
+
+#ifndef MEDICIONES_CPP
+#define MEDICIONES_CPP
+
 #include <iostream>
 #include "TimeTest.h"
 
 #include "../Dict/Dict.h"
 
+
 // Comment or uncomment if necessary
 #include "../DictList/DictList.hpp"
-// #include "../DictBynaryTree/DictBynaryTree.hpp"
+#include "../binario/Bin.hpp"
 // #include "../DictAVLTree/DictAVLTree.hpp"
 
 
@@ -104,7 +109,7 @@ void runMeasurements(Dict& dict, const int (&sizes)[lenSizes]) {
   }
 }
 
-int initMeasuraments() {
+int main() {
   // The array defines different sizes of data to be inserted, searched, and
       // deleted in each dictionary.
   const int sizes[] = {4096, 16384, 65536, 262144, 1048576
@@ -114,13 +119,15 @@ int initMeasuraments() {
   DictList dictList;
   runMeasurements(dictList, sizes);
 
-  #if 0
-  DictBynaryTree dictBynaryTree;
+  Bin dictBynaryTree;
   runMeasurements(dictBynaryTree, sizes);
 
+  #if 0
   DictAVLTree dictAVLTree;
   runMeasurements(dictAVLTree, sizes);
   #endif
 
   return 0;
 }
+
+#endif // MEDICACIONES_CPP
