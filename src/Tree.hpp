@@ -1,3 +1,5 @@
+#include "Node.hpp"
+
 /**
  * @class Tree
  * @brief A class representing an binary tree.
@@ -10,33 +12,28 @@
  */
 class Tree {
     protected:
-        /**
-         * @struct Node
-         * @brief Represents a node in an AVL tree.
-         * 
-         * This structure defines a node in an AVL tree, which contains the data and pointers to the left and right child nodes.
-         * 
-         * @var Node::data
-         * The data stored in the node.
-         * 
-         * @var Node::left
-         * Pointer to the left child node.
-         * 
-         * @var Node::right
-         * Pointer to the right child node.
-         */
-        struct Node {
-            Node(int data)
-            : data(data)
-            , left(nullptr)
-            , right(nullptr) {
-            };
-            int data;
-            Node* left;
-            Node* right;
-        };
         Node* root; /// Pointer to the root node of the tree.
         int size;  /// The number of nodes in the tree.
+
+    protected:
+        /**
+         * @brief Finds a node with the specified element.
+         * 
+         * This function searches the tree for a node containing the specified element.
+         * If the element is found, a pointer to the node is returned; otherwise, nullptr is returned.
+         * 
+         * @param element The element to search for in the tree.
+         * @return A pointer to the node containing the element, or nullptr if the element is not found.
+         */
+        Node* findNode(int element);
+
+        void eraseLeftMostRight(Node* node);
+
+        void eraseRightMostLeft(Node* node);
+
+        void erase(Node* node);
+
+
     public:
         /**
          * @brief Constructs a new Tree object.
@@ -89,4 +86,14 @@ class Tree {
          * @param element The integer value of the element to be removed from the tree.
          */
         virtual void erase(int element);
+
+        void printNode(Node* node, int indent);
+
+        void print();
+
+
+        int getSize() {
+            return size;
+        }
+
 };

@@ -1,4 +1,7 @@
 #include "Tree.hpp"
+#include <queue>
+#include <queue>
+#include <iostream>
 
 void Tree::insert(int element) {
     // if root is null, create a new node and set it as root
@@ -22,10 +25,12 @@ void Tree::insert(int element) {
         }
 
         // create a new node and set it as the child of the parent node
+        Node* newNode = new Node(element);
+        newNode->parent = parent;
         if (element < parent->data) {
-            parent->left = new Node(element);
+            parent->left = newNode;
         } else {
-            parent->right = new Node(element);
+            parent->right = newNode;
         }
 
         size++;
@@ -33,8 +38,79 @@ void Tree::insert(int element) {
 }
 
 bool Tree::contains(int element) {
-    Node* current = this->root;
+    Node* elementNode = this->findNode(element);
+    if (elementNode != nullptr) {
+        return true; // element found
+    }
+    return false; // element not found
+}
 
+void Tree::erase(int element) {
+    Node* current = this->findNode(element);
+    Node* parent = current->parent;
+
+    // left more right
+    if (current->left != nullptr) {
+        eraseLeftMostRight(current);
+    } else if (current->right != nullptr) {
+        eraseRightMostLeft(current);
+    } else {
+        /// if the node is a leaf
+        if (parent->left == current) {
+            parent->left = nullptr;
+        } else {
+            parent->right = nullptr;
+        }
+        delete current;
+    }
+    
+    this->size--;
+};
+
+void Tree::eraseLeftMostRight(Node* node) {
+    Node* current = node->left;
+    while (current->right != nullptr) {
+        current = current->right;
+    }
+
+    node->data = current->data;
+
+    this->erase(current);
+}
+
+
+void Tree::eraseRightMostLeft(Node* node) {
+    Node* current = node->right;
+    while (current->left != nullptr) {
+        current = current->left;
+    }
+
+    node->data = current->data;
+
+    this->erase(current);
+}
+
+void Tree::erase(Node* node) {
+    Node* parent = node->parent;
+
+    if (node->left) {
+        node->left->parent = parent;
+    }
+
+    if (node->right) {
+        node->right->parent = parent;
+    }
+
+    if (parent->left == node) {
+        parent->left = node->left;
+    } else {
+        parent->right = node->right;
+    }
+
+    delete node;
+}
+Node* Tree::findNode(int element) {
+    Node* current = this->root;
     // traverse the tree to find the element
     while (current != nullptr) {
         if (element < current->data) {
@@ -42,69 +118,51 @@ bool Tree::contains(int element) {
         } else if (element > current->data) {
             current = current->right;
         } else {
-            return true; // element found
+            return current; // element found
         }
     }
-
-    return false; // element not found
+    return nullptr; // element not found
 }
 
-void Tree::erase(int element) {
-    Node* current = this->root;
-    Node* parent = nullptr;
+ void Tree::printNode(Node* node, int indent) {
+        if (node == nullptr) {
+            return;
+        }
 
-    // find the node to delete
-    while (current != nullptr && current->data != element) {
-        parent = current;
-        if (element < current->data) {
-            current = current->left;
+        // Agregar espacios de indentación
+        std::cout << std::string(indent, ' ') << "Node: " << node->data << "\n";
+
+        // Mostrar información del padre
+        if (node->parent) {
+            std::cout << std::string(indent, ' ') << "  Parent: " << node->parent->data << "\n";
         } else {
-            current = current->right;
-        }
-    }
-
-    // if the element is not found, return
-    if (current == nullptr) {
-        return;
-    }
-
-    // if the node has two children
-    if (current->left != nullptr && current->right != nullptr) {
-        Node* successor = current->right;
-        Node* successorParent = current;
-
-        // find the inorder successor
-        while (successor->left != nullptr) {
-            successorParent = successor;
-            successor = successor->left;
+            std::cout << std::string(indent, ' ') << "  Parent: None (this is the root)\n";
         }
 
-        // copy the data from the successor to the current node
-        current->data = successor->data;
+        // Mostrar hijos
+        if (node->left || node->right) {
+            std::cout << std::string(indent, ' ') << "  Children: ";
+            if (node->left) {
+                std::cout << "Left: " << node->left->data;
+            } else {
+                std::cout << "Left: None";
+            }
+            std::cout << ", ";
+            if (node->right) {
+                std::cout << "Right: " << node->right->data;
+            } else {
+                std::cout << "Right: None";
+            }
+            std::cout << "\n";
+        } else {
+            std::cout << std::string(indent, ' ') << "  No children\n";
+        }
 
-        // update current and parent pointers
-        current = successor;
-        parent = successorParent;
+        // Llamar recursivamente a los hijos
+        printNode(node->left, indent + 2);  // Aumentar indentación para el hijo izquierdo
+        printNode(node->right, indent + 2); // Aumentar indentación para el hijo derecho
     }
 
-    // if the node has one child or no children
-    Node* child = nullptr;
-    if (current->left != nullptr) {
-        child = current->left;
-    } else if (current->right != nullptr) {
-        child = current->right;
-    }
-
-    // if the node to be deleted is the root
-    if (parent == nullptr) {
-        this->root = child;
-    } else if (parent->left == current) {
-        parent->left = child;
-    } else {
-        parent->right = child;
-    }
-
-    // delete the node
-    delete current;
-    size--;
+void Tree::print() {
+    printNode(this->root, 0);
 }
