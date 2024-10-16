@@ -1,3 +1,5 @@
+#include "../Dict/Dict.h"
+
 /**
  * @class Bin
  * @brief A class representing an binary tree.
@@ -8,7 +10,7 @@
  * 
  * @tparam int The type of data stored in the tree nodes.
  */
-class Bin {
+class Bin : public Dict {
     protected:
         /**
          * @struct Node
