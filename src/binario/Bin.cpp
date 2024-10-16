@@ -1,4 +1,5 @@
 #include "Bin.hpp"
+#include <iostream>
 
 void Bin::insert(int element) {
     // if root is null, create a new node and set it as root
@@ -107,4 +108,22 @@ void Bin::erase(int element) {
     // delete the node
     delete current;
     size--;
+}
+
+std::string Bin::toString() {
+    std::string result;
+    result += "Size: " + std::to_string(size) + "\n";
+    result += "Elements: ";
+    result += toString(this->root);
+    return result;
+}
+
+std::string Bin::toString(Node* node) {
+    std::string result;
+    if (node != nullptr) {
+        result += std::to_string(node->data) + " ";
+        result += toString(node->left);
+        result += toString(node->right);
+    }
+    return result;
 }

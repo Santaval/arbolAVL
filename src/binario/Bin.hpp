@@ -1,5 +1,6 @@
 #pragma once
 #include "../Dict/Dict.h"
+#include <string>
 
 /**
  * @class Bin
@@ -72,7 +73,7 @@ class Bin : public Dict {
          * 
          * @param element The element to be inserted into the tree.
          */
-        virtual void insert(int element);
+        void insert(int element) override;
         /**
          * @brief Checks if the tree contains a specific element.
          * 
@@ -82,7 +83,7 @@ class Bin : public Dict {
          * @param element The element to search for in the tree.
          * @return true if the element is found, false otherwise.
          */
-        bool contains(int element);
+        bool contains(int element) override;
         /**
          * @brief Removes the specified element from the tree.
          * 
@@ -91,5 +92,18 @@ class Bin : public Dict {
          * 
          * @param element The integer value of the element to be removed from the tree.
          */
-        virtual void erase(int element);
+        void erase(int element) override;
+
+        /**
+         * @brief Returns a string representation of the tree.
+         * 
+         * This function generates a string representation of the tree by performing
+         * an in-order traversal of the tree nodes. The string is then returned to the caller.
+         * 
+         * @return A string representation of the tree.
+         */
+        std::string toString() override;
+
+        std::string toString(Node* node);
+        
 };

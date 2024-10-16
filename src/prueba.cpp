@@ -18,17 +18,27 @@
  * - `toString()`: Returns a string representation of the list's contents.
  */
 
-#ifdef TEST
-#include <iostream>
 
+#include <iostream>
+#ifdef TEST
 // Comment and uncomment as necessary
 #include "./DictList/DictList.hpp"
-// #include "../DictBynaryTree/DictBynaryTree.hpp"
+#include "./Dict/Dict.h"
+#include "./binario/Bin.hpp"
 // #include "../DictAVLTree/DictAVLTree.hpp"
 
+void test(Dict &dict, std::string name);
 int main() {
-  // Comment and uncomment as necessary
-  DictList dict;
+  DictList dictList;
+  test(dictList, "List");
+
+  Bin dictBin;
+  test(dictBin, "Binary Tree");
+  return EXIT_SUCCESS;
+}
+
+
+void test(Dict &dict, std::string name) {
   // DictBynaryTree dict;
   // DictAVLTree dict;
 
@@ -40,9 +50,8 @@ int main() {
   }
 
   // Show dictionary after insert elements
-  std::cout << "\nList after insertion:\n" << dict.toString();
+  std::cout << "\n" << name << " after insertion:\n" << dict.toString()  <<std::endl;
 
-  std::cout << std::endl;
 
   // Look if the elements exists
   int elementsToFind[2] = {21, 88};
@@ -66,7 +75,7 @@ int main() {
   dict.erase(element);
 
   // Show dictionary after erase element
-  std::cout << "List after removing an existing element:" << element <<std::endl
+  std::cout <<  name << " after removing an existing element:" << element <<std::endl
       << dict.toString() << std::endl;
 
   std::cout << std::endl;
@@ -76,9 +85,8 @@ int main() {
   dict.erase(element);
 
   // Show dictionary after erase element
-  std::cout << "List after trying to remove an not existing element:" << element
+  std::cout << name << " after trying to remove an not existing element:" << element
       << std::endl << dict.toString() << std::endl;
-
-  return EXIT_SUCCESS;
 }
+
 #endif
