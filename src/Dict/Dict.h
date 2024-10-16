@@ -1,5 +1,6 @@
 // Copyright 2024 Randall Araya. ECCI-UCR. CC BY 4.0
 #pragma once
+#include <string>
 
 class Dict {
  public:
