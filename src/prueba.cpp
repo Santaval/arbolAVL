@@ -41,7 +41,7 @@ int main() {
   }
 
   // Show dictionary after insert elements
-  std::cout << "List after insertion:\n" << dict.toString();
+  std::cout << "\nList after insertion:\n" << dict.toString();
 
   std::cout << std::endl;
 
