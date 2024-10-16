@@ -113,17 +113,42 @@ void Bin::erase(int element) {
 std::string Bin::toString() {
     std::string result;
     result += "Size: " + std::to_string(size) + "\n";
-    result += "Elements: ";
+    result += "Elements:\n";
     result += toString(this->root);
     return result;
 }
 
 std::string Bin::toString(Node* node) {
-    std::string result;
-    if (node != nullptr) {
-        result += std::to_string(node->data) + " ";
-        result += toString(node->left);
-        result += toString(node->right);
+     if (node == nullptr) {
+        return "";
     }
+
+    std::string result;
+
+    // Agregar espacios de indentación y la información del nodo
+    result += "Node: " + std::to_string(node->data) + "-->";
+    // Mostrar hijos
+    if (node->left || node->right) {
+        result += "  Children: ";
+        if (node->left) {
+            result += "Left: " + std::to_string(node->left->data);
+        } else {
+            result += "Left: None";
+        }
+        result += ", ";
+        if (node->right) {
+            result += "Right: " + std::to_string(node->right->data);
+        } else {
+            result += "Right: None";
+        }
+        result += "\n";
+    } else {
+        result += "  No children\n";
+    }
+
+    // Concatenar la información de los hijos de manera recursiva
+    result += toString(node->left);  // Aumentar indentación para el hijo izquierdo
+    result += toString(node->right); // Aumentar indentación para el hijo derecho
+
     return result;
-}
+};
