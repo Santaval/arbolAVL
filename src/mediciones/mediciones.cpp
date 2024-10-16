@@ -104,7 +104,7 @@ void runMeasurements(Dict& dict, const int (&sizes)[lenSizes]) {
   }
 }
 
-int main() {
+int initMeasuraments() {
   // The array defines different sizes of data to be inserted, searched, and
       // deleted in each dictionary.
   const int sizes[] = {4096, 16384, 65536, 262144, 1048576
