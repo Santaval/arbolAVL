@@ -1,6 +1,5 @@
 // Copyright 2024 Randall Araya. ECCI-UCR. CC BY 4.0
-#ifndef DICT_HPP
-#define DICT_HPP
+#pragma once
 
 class Dict {
  public:
@@ -37,4 +36,3 @@ class Dict {
   virtual ~Dict() = default;
 };
 
-#endif // DICT_HPP

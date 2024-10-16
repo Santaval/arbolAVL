@@ -1,3 +1,5 @@
+
+#pragma once
 /**
  * @class Tree
  * @brief A class representing an binary tree.

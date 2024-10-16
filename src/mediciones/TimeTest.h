@@ -1,3 +1,5 @@
+#ifndef TIMETEST_H
+#define TIMETEST_H
 #include <chrono>
 #include <cstdint>
 #include <memory>
@@ -69,3 +71,4 @@ template <typename T> double testErase(T& collection, std::shared_ptr<int[]> arr
 	return micros;
 }
 
+#endif // TIMETEST_H

@@ -1,5 +1,4 @@
 // Copyright 2024 Randall Araya. ECCI-UCR. CC BY 4.0
-
 /**
  * @file test.cpp
  * @brief Test file to verify the correctness of the methods in the DictList
@@ -19,7 +18,7 @@
  * - `toString()`: Returns a string representation of the list's contents.
  */
 
-#if 0
+#ifdef TEST
 #include <iostream>
 
 // Comment and uncomment as necessary
