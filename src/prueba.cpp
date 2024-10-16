@@ -29,9 +29,12 @@
 
 void test(Dict &dict, std::string name);
 int main() {
+
+  std::cout << "============== LIST ==============" << std::endl;
   DictList dictList;
   test(dictList, "List");
 
+  std::cout << "============== BINARY TREE ==============" << std::endl;
   Bin dictBin;
   test(dictBin, "Binary Tree");
   return EXIT_SUCCESS;
@@ -51,6 +54,15 @@ void test(Dict &dict, std::string name) {
 
   // Show dictionary after insert elements
   std::cout << "\n" << name << " after insertion:\n" << dict.toString()  <<std::endl;
+
+  // insert an element that already exists
+  int existingElement = 21;
+  dict.insert(existingElement);
+
+  // Show dictionary after insert an existing element
+  std::cout << "\n" << name << " after inserting an existing element:" << existingElement
+      << std::endl << dict.toString() << std::endl;
+
 
 
   // Look if the elements exists
