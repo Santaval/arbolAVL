@@ -11,37 +11,34 @@ class DictList : public Dict{
  private:
   // Node structure of the singly linked list
   struct Node {
-    int key;
     int element;
     Node *next;
 
-    Node(int key, int element);
+    Node(int element);
   };
 
   Node *head;
-  int nextKey;
 
  public:
   // Constructor
   /**
    * Requires: Nothing.
    * Effects: Initializes an empty list.
-   * Modifies: Initializes the head to nullptr nextKey to 0
+   * Modifies: Initializes the head to nullptr
    */
   DictList();
 
-  // Insert a new element (key is auto-generated)
+  // Insert a new element/key
   /**
    * Requires: An integer element.
-   * Effects: Adds a new element to the dictionary. A key is automatically
-   * generated for the element.
-   * Modifies: The list, by inserting a new node with an auto-generated key.
+   * Effects: Adds a new element to the dictionary.
+   * Modifies: The list, by inserting a new node.
    */
   void insert(int element) override;
 
   // Search for a element associated with a key and determintaet if exist
   /**
-   * Requires: An integer key.
+   * Requires: An integer element/key.
    * Effects: Returns a boolean element depending if the element exist or not
    * Modifies: Nothing.
    */
@@ -49,7 +46,7 @@ class DictList : public Dict{
 
   // Remove a element
   /**
-   * Requires: An integer element.
+   * Requires: An integer element/key.
    * Effects: Removes the node with the given element from the list. If the
    *          element is not found, it makes nothing.
    * Modifies: The list, by removing a node if the element is found.
@@ -59,8 +56,7 @@ class DictList : public Dict{
   // Return a string representation of the dictionary
   /**
    * Requires: Nothing.
-   * Effects: Returns a string containing all key-element pairs in the format
-   *          "key: element" on each line.
+   * Effects: Returns a string containing all keys/elements
    * Modifies: Nothing.
    */
   std::string toString() const;

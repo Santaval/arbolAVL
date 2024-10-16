@@ -2,16 +2,14 @@
 #include "DictList.hpp"
 
 // Node constructor
-DictList::Node::Node(int key, int element) : key(key), element(element),
-                next(nullptr) {}
+DictList::Node::Node(int element) : element(element), next(nullptr) {}
 
 // List constructor
-DictList::DictList() : head(nullptr), nextKey(0) {}
+DictList::DictList() : head(nullptr) {}
 
 void DictList::insert(int element) {
   if (!this->contains(element)) {
-    Node *newNode = new Node(nextKey, element);
-    nextKey++;
+    Node *newNode = new Node(element);
 
     // If the list is empty
     if (head == nullptr) {
@@ -90,14 +88,14 @@ std::string DictList::toString() const {
   std::string result = "";
 
   while (current != nullptr) {
-    result += std::to_string(current->key) + ": " + std::to_string(
-        current->element) + "\n";
+    result +=  std::to_string(current->element) + " --> ";
     current = current->next;
   }
 
   if (result.empty()) {
     return "There are no elements in the dictionary\n";
   }
+  result += "nullptr\n";
 
   return result;
 }
