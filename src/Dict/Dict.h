@@ -27,6 +27,14 @@ class Dict {
    */
   virtual void erase(int element) = 0;
 
+  // Pure virtual method to print the dictionary
+  /**
+   * Requires: Nothing.
+   * Effects: Prints the contents of the dictionary.
+   * Modifies: Nothing.
+   */
+  virtual std::string toString() = 0;
+
   // Virtual destructor
   /**
    * Requires: Nothing.

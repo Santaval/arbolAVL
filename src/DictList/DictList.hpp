@@ -59,7 +59,7 @@ class DictList : public Dict{
    * Effects: Returns a string containing all keys/elements
    * Modifies: Nothing.
    */
-  std::string toString() const;
+  std::string toString() override;
 
   // Destructor
   /**

@@ -83,7 +83,7 @@ void DictList::erase(int element) {
   delete current;
 }
 
-std::string DictList::toString() const {
+std::string DictList::toString() {
   Node* current = head;
   std::string result = "";
 
