@@ -1,42 +1,19 @@
 
 #pragma once
+#include "../Dict/Dict.h"
+#include "Node.hpp"
 /**
- * @class Tree
- * @brief A class representing an binary tree.
+ * @class AVLTree
+ * @brief A class representing an binary AVLTree.
  * 
- * The Tree class provides basic operations for a binary tree, including insertion,
+ * The AVLTree class provides basic operations for a binary AVLTree, including insertion,
  * search, and deletion of elements. It maintains a root node and keeps track of the
- * size of the tree.
+ * size of the AVLTree.
  * 
- * @tparam int The type of data stored in the tree nodes.
+ * @tparam int The type of data stored in the AVLTree nodes.
  */
-class Tree {
+class AVLTree : public Dict {
     protected:
-        /**
-         * @struct Node
-         * @brief Represents a node in an AVL tree.
-         * 
-         * This structure defines a node in an AVL tree, which contains the data and pointers to the left and right child nodes.
-         * 
-         * @var Node::data
-         * The data stored in the node.
-         * 
-         * @var Node::left
-         * Pointer to the left child node.
-         * 
-         * @var Node::right
-         * Pointer to the right child node.
-         */
-        struct Node {
-            Node(int data)
-            : data(data)
-            , left(nullptr)
-            , right(nullptr) {
-            };
-            int data;
-            Node* left;
-            Node* right;
-        };
         Node* root; /// Pointer to the root node of the tree.
         int size;  /// The number of nodes in the tree.
     public:
@@ -45,7 +22,7 @@ class Tree {
          * 
          * This constructor initializes the Tree with a null root and a size of zero.
          */
-        Tree()
+        AVLTree()
         : root(nullptr)
         , size(0) {
 
@@ -59,7 +36,7 @@ class Tree {
          * properly deallocated and any other necessary cleanup tasks
          * are performed when a Tree object is destroyed.
          */
-        ~Tree() {
+        ~AVLTree() {
 
         };
 
@@ -71,7 +48,7 @@ class Tree {
          * 
          * @param element The element to be inserted into the tree.
          */
-        virtual void insert(int element);
+        virtual void insert(int element) override;
         /**
          * @brief Checks if the tree contains a specific element.
          * 
@@ -81,7 +58,7 @@ class Tree {
          * @param element The element to search for in the tree.
          * @return true if the element is found, false otherwise.
          */
-        bool contains(int element);
+        bool contains(int element) override;
         /**
          * @brief Removes the specified element from the tree.
          * 
@@ -90,5 +67,35 @@ class Tree {
          * 
          * @param element The integer value of the element to be removed from the tree.
          */
-        virtual void erase(int element);
+        virtual void erase(int element) override;
+
+        /**
+         * @brief Balances the AVL tree starting from the given node.
+         *
+         * This function ensures that the AVL tree maintains its balance property
+         * by performing necessary rotations starting from the specified node.
+         *
+         * @param node A pointer to the node from which to start balancing the tree.
+         */
+        void balance(Node* node);
+
+        Node* rightRotate(Node* y);
+        Node* leftRotate(Node* x);
+
+        int height(Node* node);
+
+        int getBalance(Node* node);
+
+                /**
+         * @brief Returns a string representation of the tree.
+         * 
+         * This function generates a string representation of the tree by performing
+         * an in-order traversal of the tree nodes. The string is then returned to the caller.
+         * 
+         * @return A string representation of the tree.
+         */
+        std::string toString() override;
+
+        std::string toString(Node* node);
+
 };
