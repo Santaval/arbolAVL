@@ -1,4 +1,5 @@
 #include "AVLTree.hpp"
+#include <iostream>
 
 void AVLTree::insert(int element) {
     // if root is null, create a new node and set it as root
