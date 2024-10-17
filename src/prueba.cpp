@@ -25,7 +25,7 @@
 #include "./DictList/DictList.hpp"
 #include "./Dict/Dict.h"
 #include "./binario/Bin.hpp"
-// #include "../DictAVLTree/DictAVLTree.hpp"
+#include "./AVLTree/AVLTree.hpp"
 
 void test(Dict &dict, std::string name);
 int main() {
@@ -37,7 +37,12 @@ int main() {
   std::cout << "============== BINARY TREE ==============" << std::endl;
   Bin dictBin;
   test(dictBin, "Binary Tree");
+
+  std::cout << "============== AVL TREE ==============" << std::endl;
+  AVLTree dictAVL;
+  test(dictAVL, "AVL Tree");
   return EXIT_SUCCESS;
+
 }
 
 
