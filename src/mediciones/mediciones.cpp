@@ -118,11 +118,11 @@ int main() {
   const int sizes[] = {4096, 16384, 65536, 262144, 1048576
     /*, 4194304 uncomment for extra points*/};
 
-    // std::cout << "============== LIST ==============" << std::endl;
+    std::cout << "============== LIST ==============" << std::endl;
 
-    // //Create an instance for each dict and run the measurements
-    // DictList dictList;
-    // runMeasurements(dictList, sizes);
+    //Create an instance for each dict and run the measurements
+    DictList dictList;
+    runMeasurements(dictList, sizes);
 
     std::cout << "============== BINARY TREE ==============" << std::endl;
 
@@ -130,10 +130,10 @@ int main() {
     runMeasurements(dictBynaryTree, sizes);
 
 
-    // std::cout << "============== AVL TREE ==============" << std::endl;
+    std::cout << "============== AVL TREE ==============" << std::endl;
 
-    // AVLTree dictAVLTree;
-    // runMeasurements(dictAVLTree, sizes);
+    AVLTree dictAVLTree;
+    runMeasurements(dictAVLTree, sizes);
 
     return 0;
 }
