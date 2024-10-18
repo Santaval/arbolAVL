@@ -65,45 +65,96 @@ class Bin : public Dict {
 
         };
 
+        
         /**
-         * @brief Inserts an element into the tree.
-         * 
-         * This pure virtual function must be implemented by any derived class.
-         * It inserts the specified element into the tree, maintaining the tree's properties.
-         * 
-         * @param element The element to be inserted into the tree.
+         * @brief Inserta un elemento en el árbol binario.
+         *
+         * @effect Si el árbol está vacío, crea un nuevo nodo y lo establece como la raíz.
+         *         Si el árbol no está vacío, busca la posición correcta para insertar el nuevo nodo
+         *         de acuerdo a las reglas de un árbol binario de búsqueda.
+         *         Si el elemento ya existe en el árbol, no realiza ninguna inserción.
+         *
+         * @require La clase Bin debe tener un puntero `root` inicializado y una variable `size`
+         *          que rastrea el número de nodos en el árbol.
+         *          El nodo debe ser insertado en la posición correspondiente
+         *          manteniendo las propiedades de un árbol binario de búsqueda (elementos menores
+         *          a la izquierda, elementos mayores a la derecha).
+         *
+         * @modifies Modifica la estructura interna del árbol, agregando un nuevo nodo si el elemento
+         *           no existía previamente. Aumenta el valor de la variable `size` en uno en caso de inserción exitosa.
+         *
+         * @param element El valor del elemento a insertar en el árbol.
          */
         void insert(int element) override;
+
         /**
-         * @brief Checks if the tree contains a specific element.
-         * 
-         * This function searches the tree to determine if the specified element
-         * is present. It returns true if the element is found, and false otherwise.
-         * 
-         * @param element The element to search for in the tree.
-         * @return true if the element is found, false otherwise.
+         * @brief Verifica si un elemento está presente en el árbol binario.
+         *
+         * @effect No realiza cambios en la estructura del árbol.
+         *         Solo recorre el árbol para verificar si el elemento especificado
+         *         está presente en él.
+         *
+         * @require El árbol debe estar inicializado, con un puntero `root` válido.
+         *          La estructura del árbol debe seguir las reglas de un árbol binario de búsqueda,
+         *          donde los nodos con valores menores se encuentran a la izquierda y los mayores a la derecha.
+         *
+         * @modifies No modifica la estructura interna del árbol ni ninguna de sus propiedades.
+         *
+         * @param element El valor del elemento a buscar en el árbol.
+         * @return true si el elemento está presente en el árbol, false en caso contrario.
          */
         bool contains(int element) override;
         /**
-         * @brief Removes the specified element from the tree.
-         * 
-         * This function searches for the given element in the tree and removes it if found.
-         * The tree is then rebalanced to maintain the AVL tree properties.
-         * 
-         * @param element The integer value of the element to be removed from the tree.
+         * @brief Elimina un elemento del árbol binario de búsqueda.
+         *
+         * @effect Si el elemento está presente, se elimina del árbol. Dependiendo del caso:
+         *         - Si el nodo tiene dos hijos, se reemplaza por su sucesor inorder.
+         *         - Si el nodo tiene un solo hijo, ese hijo reemplaza al nodo.
+         *         - Si el nodo no tiene hijos, simplemente se elimina.
+         *         Si el elemento no se encuentra en el árbol, no se realiza ninguna acción.
+         *
+         * @require El árbol debe estar inicializado y seguir las reglas de un árbol binario de búsqueda.
+         *          El elemento debe ser comparable mediante operadores `<` y `>`.
+         *
+         * @modifies Modifica la estructura del árbol eliminando el nodo correspondiente si el elemento
+         *           está presente. También ajusta el tamaño del árbol disminuyendo el valor de `size` en uno.
+         *
+         * @param element El valor del elemento a eliminar del árbol.
          */
         void erase(int element) override;
 
         /**
-         * @brief Returns a string representation of the tree.
-         * 
-         * This function generates a string representation of the tree by performing
-         * an in-order traversal of the tree nodes. The string is then returned to the caller.
-         * 
-         * @return A string representation of the tree.
+         * @brief Devuelve una representación en forma de cadena del árbol binario.
+         *
+         * @effect No modifica la estructura del árbol. Construye una cadena que contiene
+         *         información sobre el tamaño del árbol y los elementos presentes.
+         *
+         * @require El árbol debe estar inicializado. La función auxiliar `toString(Node*)`
+         *          debe existir y ser capaz de recorrer el árbol a partir de la raíz.
+         *
+         * @modifies No modifica ningún atributo del árbol. Solo construye y devuelve una cadena
+         *           de texto con la información del árbol.
+         *
+         * @return Una cadena de texto que incluye el tamaño del árbol y sus elementos.
          */
         std::string toString() override;
-
+        /**
+         * @brief Devuelve una representación en forma de cadena de un nodo y sus hijos en el árbol binario.
+         *
+         * @effect No modifica la estructura del árbol. Genera una cadena de texto que representa
+         *         la información del nodo actual y sus hijos, de manera recursiva.
+         *
+         * @require El nodo `node` debe estar inicializado o ser nulo. Si no es nulo, debe tener accesibles
+         *          sus hijos izquierdos y derechos (si existen). Este método requiere que los valores de los
+         *          nodos sean convertibles a cadena mediante `std::to_string`.
+         *
+         * @modifies No modifica la estructura del árbol ni ningún atributo de los nodos. 
+         *           Solo construye y devuelve una cadena de texto con la información de los nodos.
+         *
+         * @param node Un puntero al nodo del cual se quiere obtener la representación en cadena.
+         * @return Una cadena que describe el nodo actual, sus hijos (si tiene), y el resultado de las llamadas recursivas
+         *         sobre sus hijos izquierdo y derecho.
+         */
         std::string toString(Node* node);
         
 };
