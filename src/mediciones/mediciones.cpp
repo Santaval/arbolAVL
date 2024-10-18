@@ -12,6 +12,7 @@
 // Comment or uncomment if necessary
 #include "../DictList/DictList.hpp"
 #include "../binario/Bin.hpp"
+#include "../AVLTree/AVLTree.hpp"
 // #include "../DictAVLTree/DictAVLTree.hpp"
 
 
@@ -115,21 +116,26 @@ int main() {
   // The array defines different sizes of data to be inserted, searched, and
       // deleted in each dictionary.
   const int sizes[] = {4096, 16384, 65536, 262144, 1048576
-      /*, 4194304 uncomment for extra points*/};
+    /*, 4194304 uncomment for extra points*/};
 
-  // Create an instance for each dict and run the measurements
-  DictList dictList;
-  runMeasurements(dictList, sizes);
+    // std::cout << "============== LIST ==============" << std::endl;
 
-  Bin dictBynaryTree;
-  runMeasurements(dictBynaryTree, sizes);
+    // //Create an instance for each dict and run the measurements
+    // DictList dictList;
+    // runMeasurements(dictList, sizes);
 
-  #if 0
-  DictAVLTree dictAVLTree;
-  runMeasurements(dictAVLTree, sizes);
-  #endif
+    std::cout << "============== BINARY TREE ==============" << std::endl;
 
-  return 0;
+    Bin dictBynaryTree;
+    runMeasurements(dictBynaryTree, sizes);
+
+
+    // std::cout << "============== AVL TREE ==============" << std::endl;
+
+    // AVLTree dictAVLTree;
+    // runMeasurements(dictAVLTree, sizes);
+
+    return 0;
 }
 
 #endif // TEST
