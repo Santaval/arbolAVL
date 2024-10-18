@@ -15,7 +15,7 @@
  */
 struct Node{
     Node(int data)
-        : data(data), height(0), left(nullptr), right(nullptr), parent(nullptr) {
+        : data(data), height(1), left(nullptr), right(nullptr), parent(nullptr) {
           };
     int data;
     int height;

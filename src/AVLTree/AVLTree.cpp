@@ -135,6 +135,12 @@ std::string AVLTree::toString(Node* node) {
 
     // Agregar espacios de indentación y la información del nodo
     result += "Node: " + std::to_string(node->data) + "-->";
+    // Mostrar el padre
+    if (node->parent) {
+        result += " Parent: " + std::to_string(node->parent->data);
+    } else {
+        result += " Parent: None";
+    }
     // Mostrar hijos
     if (node->left || node->right) {
         result += "  Children: ";
@@ -149,12 +155,12 @@ std::string AVLTree::toString(Node* node) {
         } else {
             result += "Right: None";
         }
-        result += " Height: " + std::to_string(node->height + 1);
-        result += "\n";
     } else {
-        result += "  No children\n";
+        result += "  No children";
     }
 
+        result += " Height: " + std::to_string(node->height + 1);
+        result += "\n";
     // Concatenar la información de los hijos de manera recursiva
     result += toString(node->left);  // Aumentar indentación para el hijo izquierdo
     result += toString(node->right); // Aumentar indentación para el hijo derecho
@@ -226,11 +232,21 @@ void AVLTree::balance(Node* node) {
 
 // Rotación a la derecha
 Node* AVLTree::rightRotate(Node* y) {
+
     Node* x = y->left;
     Node* T2 = x->right;
 
     // Realizar rotación
     x->right = y;
+    y->left = T2;
+
+    x->parent = y->parent;
+    y->parent = x;
+
+    if (T2 != nullptr) {
+        T2->parent = y;
+    }
+
     y->left = T2;
 
     // Actualizar alturas
@@ -248,6 +264,14 @@ Node* AVLTree::leftRotate(Node* x) {
 
     // Realizar rotación
     y->left = x;
+    x->right = T2;
+
+    y->parent = x->parent;
+    x->parent = y;
+
+    if (T2 != nullptr) {
+        T2->parent = x;
+    }
     x->right = T2;
 
     // Actualizar alturas
