@@ -152,3 +152,17 @@ std::string Bin::toString(Node* node) {
 
     return result;
 };
+
+void Bin::clear(Node* node) {
+    // Si el nodo es nulo, no hacer nada
+    if (node == nullptr) {
+        return;
+    }
+
+    // Llamar recursivamente a la función para los hijos del nodo
+    this->clear(node->left);
+    this->clear(node->right);
+
+    // Eliminar el nodo
+    delete node;
+}

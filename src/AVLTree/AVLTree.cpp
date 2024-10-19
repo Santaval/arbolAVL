@@ -1,6 +1,21 @@
 #include "AVLTree.hpp"
 #include <iostream>
 
+
+void AVLTree::clear(Node* node) {
+    // Si el nodo es nulo, no hacer nada
+    if (node == nullptr) {
+        return;
+    }
+
+    // Llamar recursivamente a la función para los hijos del nodo
+    this->clear(node->left);
+    this->clear(node->right);
+
+    // Eliminar el nodo
+    delete node;
+}
+
 void AVLTree::insert(int element) {
     // if root is null, create a new node and set it as root
     if (this->root == nullptr) {
@@ -43,7 +58,7 @@ void AVLTree::insert(int element) {
     
 }
 
-bool AVLTree::contains(int element) { 
+bool AVLTree::contains(int element) {
     Node* current = this->root;
 
     // traverse the AVLTree to find the element
@@ -61,62 +76,62 @@ bool AVLTree::contains(int element) {
 }
 
 void AVLTree::erase(int element) {
-            Node* current = this->root;
+        Node* current = this->root;
 
-        // Encontrar el nodo a eliminar
-        while (current != nullptr && current->data != element) {
-            if (element < current->data) {
-                current = current->left;
-            } else {
-                current = current->right;
-            }
-        }
-
-        // Si no se encuentra el elemento, salir
-        if (current == nullptr) {
-            return;
-        }
-
-        // Caso 1: El nodo tiene dos hijos
-        if (current->left != nullptr && current->right != nullptr) {
-            Node* successor = current->right;
-
-            // Encontrar el sucesor en orden
-            while (successor->left != nullptr) {
-                successor = successor->left;
-            }
-
-            // Copiar los datos del sucesor al nodo actual
-            current->data = successor->data;
-
-            // Ahora eliminamos el sucesor en lugar del nodo original
-            current = successor;
-        }
-
-        // Caso 2: El nodo tiene un hijo o no tiene hijos
-        Node* child = (current->left != nullptr) ? current->left : current->right;
-
-        // Actualizar el puntero al padre del hijo si no es nullptr
-        if (child != nullptr) {
-            child->parent = current->parent;
-        }
-
-        // Si el nodo a eliminar es la raíz
-        if (current->parent == nullptr) {
-            this->root = child;
-        } else if (current->parent->left == current) {
-            current->parent->left = child;
+    // Encontrar el nodo a eliminar
+    while (current != nullptr && current->data != element) {
+        if (element < current->data) {
+            current = current->left;
         } else {
-            current->parent->right = child;
+            current = current->right;
+        }
+    }
+
+    // Si no se encuentra el elemento, salir
+    if (current == nullptr) {
+        return;
+    }
+
+    // Caso 1: El nodo tiene dos hijos
+    if (current->left != nullptr && current->right != nullptr) {
+        Node* successor = current->right;
+
+        // Encontrar el sucesor en orden
+        while (successor->left != nullptr) {
+            successor = successor->left;
         }
 
-        // Eliminar el nodo
-        delete current;
-        size--;
+        // Copiar los datos del sucesor al nodo actual
+        current->data = successor->data;
 
-        // Rebalancear el árbol
-        this->balance(child);
+        // Ahora eliminamos el sucesor en lugar del nodo original
+        current = successor;
     }
+
+    // Caso 2: El nodo tiene un hijo o no tiene hijos
+    Node* child = (current->left != nullptr) ? current->left : current->right;
+
+    // Actualizar el puntero al padre del hijo si no es nullptr
+    if (child != nullptr) {
+        child->parent = current->parent;
+    }
+
+    // Si el nodo a eliminar es la raíz
+    if (current->parent == nullptr) {
+        this->root = child;
+    } else if (current->parent->left == current) {
+        current->parent->left = child;
+    } else {
+        current->parent->right = child;
+    }
+
+    // Eliminar el nodo
+    delete current;
+    size--;
+
+    // Rebalancear el árbol
+    this->balance(child);
+}
 
 std::string AVLTree::toString() {
     std::string result;

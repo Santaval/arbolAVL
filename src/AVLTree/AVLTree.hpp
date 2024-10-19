@@ -36,8 +36,20 @@ class AVLTree : public Dict {
          * are performed when a Tree object is destroyed.
          */
         ~AVLTree() {
-
+            clear(root);
         };
+
+        /**
+         * @brief Clears the AVLTree by deleting all nodes.
+         *
+         * @effect Recursively deletes all nodes in the AVLTree, starting from the root.
+         *
+         * @require The AVLTree must be initialized with a valid root node.
+         *
+         * @modifies Modifies the structure of the AVLTree by deleting all nodes.
+         */
+
+        void clear(Node* node);
 
         /**
          * @brief Inserta un elemento en el árbol AVL, asegurando que el árbol se mantenga balanceado.
