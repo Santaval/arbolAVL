@@ -12,9 +12,9 @@ protected:
     virtual void delete_vertex(VertexType vertex) = 0;
     virtual void modify_element(VertexType vertex, ElementType newElement) = 0;
     virtual char element(VertexType vertex) = 0;
-    virtual void add_edge(VertexType vertex1, VertexType vertex2, weight) = 0;
+    virtual void add_edge(VertexType vertex1, VertexType vertex2, double weight) = 0;
     virtual void delete_edge(VertexType vertex1, VertexType vertex2) = 0;
-    virtual void modify_weight(VertexType vertex1, VertexType vertex2, weight newWeight) = 0;
+    virtual void modify_weight(VertexType vertex1, VertexType vertex2, double newWeight) = 0;
     virtual double weight(VertexType vertex1, VertexType vertex2) = 0;
     virtual VertexType first_vertex() = 0;
     virtual VertexType next_vertex(VertexType vertex) = 0;
