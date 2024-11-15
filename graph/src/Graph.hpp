@@ -1,8 +1,8 @@
 template <typename VertexType, typename ElementType>
 class Graph
 {
-private:
-    int elements;
+protected:
+    int size;
 public:
     Graph();
     ~Graph();
@@ -140,6 +140,8 @@ protected:
      */
     virtual VertexType next_adjacent(VertexType vertex, VertexType adjacent) = 0;
 
+public:
+
     /**
      * @brief Checks if the graph is empty.
      * 
@@ -157,7 +159,7 @@ protected:
      * 
      * @return int The number of vertices in the graph.
      */
-    inline int amount_vertex() const { return elements; }
+    inline int amount_vertex() const { return size; }
 };
 
 
