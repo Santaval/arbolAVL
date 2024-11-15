@@ -1,15 +1,27 @@
+#pragma once
+
+#include <vector>
+#include <cstdio>
+#include <ostream>
+
 #include "Graph.hpp"
-
-typedef struct {
-    int row;
-    int col;
-} Vertex;
-
+#include "Vertex.hpp"
 
 
 class MatrixGraph : public Graph<Vertex, char> {
 private:
-    /* data */
+    /**
+     * @brief A 2D matrix represented as a vector of vectors of doubles.
+     * 
+     * This data structure is used to store a matrix where each element is a double.
+     * Each inner vector represents a row in the matrix, and the outer vector 
+     * contains all the rows.
+     */
+    std::vector<std::vector<double>> matrix;
+    /**
+     * @brief A vector to store elements of type char.
+     */
+    std::vector<char> elements;
 public:
     /**
      * @brief Construct a new MatrixGraph object.
@@ -18,14 +30,14 @@ public:
      * 
      * @param args Arguments for the constructor (if any).
      */
-    MatrixGraph(/* args */);
+    MatrixGraph(/* args */) : Graph() {}
     /**
      * @brief Destructor for the MatrixGraph class.
      * 
      * This destructor is responsible for cleaning up any resources
      * allocated by the MatrixGraph instance.
      */
-    ~MatrixGraph();
+    ~MatrixGraph() {};
     /**
      * @brief Clears the graph, removing all vertices and edges.
      * 
@@ -42,6 +54,9 @@ public:
      * @param element The element to be assigned to the new vertex.
      */
     void append_vertex(char element) override;
+
+   
+
     /**
      * @brief Deletes a vertex from the graph.
      * 
@@ -52,6 +67,7 @@ public:
      * @param vertex The vertex to be deleted from the graph.
      */
     void delete_vertex(Vertex vertex) override;
+
     /**
      * @brief Modifies the element associated with a given vertex.
      * 
@@ -156,4 +172,29 @@ public:
      * @return Vertex The next adjacent vertex to the given vertex.
      */
     Vertex next_adjacent(Vertex vertex, Vertex adjacent) override;
+
+    void print_matrix();
+    void print_elements();
+
+private:
+     /**
+     * @brief Adds columns to the field in the matrix graph.
+     *
+     * This function is responsible for adding new columns to the existing field
+     * in the matrix graph. It modifies the internal structure of the matrix to
+     * accommodate the additional columns.
+     */
+    void add_cols_field();
+
+     /**
+     * @brief Removes columns from the field in the matrix graph.
+     *
+     * This function is responsible for removing specific columns from the field
+     * within the matrix graph structure. The exact columns to be removed and 
+     * the criteria for their removal are determined by the implementation details.
+     */
+    void remove_cols_field(int index);
+
+    int find_vertex_index(Vertex vertex);
+
 };
