@@ -14,6 +14,10 @@ bool Vertex::operator ==(const Vertex& vertex) {
     return this->number == vertex.number;
 }
 
+bool Vertex::operator ==(const int number) {
+    return this->number == number;
+}
+
 Vertex::operator int() const {
     return this->number;
 }

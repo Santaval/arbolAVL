@@ -38,66 +38,66 @@ void MatrixGraph::delete_vertex(Vertex vertex) {
 }
 
 
-void MatrixGraph::modify_element(Vertex vertex, char newElement)
-{
+void MatrixGraph::modify_element(Vertex vertex, char newElement) {
+    this->elements[vertex] = newElement;
 }
 
-char MatrixGraph::element(Vertex vertex)
-{
-    return 0;
+char MatrixGraph::element(Vertex vertex) {
+    return this->elements[vertex];
 }
 
-void MatrixGraph::add_edge(Vertex vertex1, Vertex vertex2, double weight)
-{
+void MatrixGraph::add_edge(Vertex vertex1, Vertex vertex2, double weight) {
+    this->matrix[vertex1][vertex2] = weight;
 }
 
-void MatrixGraph::delete_edge(Vertex vertex1, Vertex vertex2)
-{
+void MatrixGraph::delete_edge(Vertex vertex1, Vertex vertex2) {
+    this->matrix[vertex1][vertex2] = -1;
 }
 
-void MatrixGraph::modify_weight(Vertex vertex1, Vertex vertex2, double newWeight)
-{
+void MatrixGraph::modify_weight(Vertex vertex1, Vertex vertex2, double newWeight) {
+    this->matrix[vertex1][vertex2] = newWeight;
 }
 
 double MatrixGraph::weight(Vertex vertex1, Vertex vertex2)
 {
-    return 0;
+    return this->matrix[vertex1][vertex2];
 }
 
 Vertex MatrixGraph::first_vertex()
-{
+{   
+    if (this->amount_vertex() == 0) {
+        return Vertex();
+    } else {
+        return 0;
+    }
+}
+
+Vertex MatrixGraph::next_vertex(Vertex vertex) {
+    if (vertex == this->amount_vertex() - 1) {
+        return Vertex();
+    } else {
+        return vertex + 1;
+    }
+}
+
+Vertex MatrixGraph::first_adjacent(Vertex vertex) {
+    for (int i = 0; i < this->amount_vertex(); i++) {
+        if (this->matrix[vertex][i] != -1) {
+            return i;
+        }
+    }
     return Vertex();
 }
 
-Vertex MatrixGraph::next_vertex(Vertex vertex)
-{
-    return Vertex();
-}
-
-Vertex MatrixGraph::first_adjacent(Vertex vertex)
-{
-    return Vertex();
-}
 
 Vertex MatrixGraph::next_adjacent(Vertex vertex, Vertex adjacent)
 {
+    for (int i = adjacent + 1; i < this->amount_vertex(); i++) {
+        if (this->matrix[vertex][i] != -1) {
+            return i;
+        }
+    }
     return Vertex();
 }
 
-
-void MatrixGraph::print_matrix() {
-    for (int i = 0; i < this->amount_vertex(); i++) {
-        for (int j = 0; j < this->amount_vertex(); j++) {
-            std::cout << this->matrix[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
-void MatrixGraph::print_elements() {
-    for (int i = 0; i < this->amount_vertex(); i++) {
-        std::cout << this->elements[i] << " ";
-    }
-    std::cout << std::endl;
-}
 

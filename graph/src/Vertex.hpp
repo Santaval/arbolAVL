@@ -14,5 +14,6 @@ class Vertex {
         int operator  ++();
         int operator --();
         bool operator  == (const Vertex& number);
+        bool operator == (const int number);
         operator int() const;
 };
