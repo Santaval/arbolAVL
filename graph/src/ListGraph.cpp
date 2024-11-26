@@ -5,12 +5,14 @@
 void ListGraph::clear() {
     this->adjacencyList.clear();
     this->elements.clear();
+    this->size = 0;
 }
 
 void ListGraph::append_vertex(char element) {
     Vertex newVertex(this->elements.size());
     this->elements.push_back(element);
     this->adjacencyList[newVertex] = {};
+    this->size++;
 }
 
 void ListGraph::delete_vertex(Vertex vertex) {
@@ -37,6 +39,7 @@ void ListGraph::delete_vertex(Vertex vertex) {
         ++index;
     }
     this->adjacencyList = newAdjList;
+    this->size--;
 }
 
 void ListGraph::modify_element(Vertex vertex, char newElement) {
@@ -59,7 +62,7 @@ void ListGraph::delete_edge(Vertex vertex1, Vertex vertex2) {
     adjList1.erase(std::remove_if(adjList1.begin(), adjList1.end(),
                                   [vertex2](const auto& edge) {
                                       return edge.first == vertex2;
-                                  }),
+                                 }),
                    adjList1.end());
 
     auto& adjList2 = this->adjacencyList[vertex2];
@@ -126,7 +129,7 @@ Vertex ListGraph::next_adjacent(Vertex vertex, Vertex adjacent) {
     return Vertex(); // No hay más adyacentes
 }
 
-void ListGraph::print_adjacency_list() {
+void ListGraph::print_graph() {
     for (const auto& [vertex, edges] : this->adjacencyList) {
         std::cout << "Vertex " << vertex << ": ";
         for (const auto& [adjVertex, weight] : edges) {
