@@ -18,13 +18,17 @@ ListGraph::~ListGraph() {
 
 // Clear the ListGraph
 void ListGraph::clear() {
-  adjacencyList.clear();
+  this->adjacencyList.clear();
+  this->elements.clear();
+  this->size = 0;
 }
 
 // Add a vertex
 void ListGraph::append_vertex(char element) {
+  this->elements.push_back(element);
   Vertex vertex(adjacencyList.size());
   adjacencyList[vertex] = {};
+  ++this->size;
 }
 
 // Delete a vertex
@@ -37,17 +41,18 @@ void ListGraph::delete_vertex(Vertex vertex) {
                                  return edge.first == vertex;
                                }), edges.end());
   }
+  this->elements.erase(this->elements.begin() + vertex);
+  this->size--;
 }
 
 // Modify a vertex
 void ListGraph::modify_element(Vertex vertex, char new_element) {
-  // Agregar un atributo element al vertex para que esto tenga sentido
+  this->elements[vertex] = new_element;
 }
 
 // Get the value of a vertex
 char ListGraph::element(Vertex vertex) {
-  // Agregar un atributo element al vertex para que esto tenga sentido
-  return static_cast<char>(vertex);
+  return this->elements[vertex];
 }
 
 // Add an edge
