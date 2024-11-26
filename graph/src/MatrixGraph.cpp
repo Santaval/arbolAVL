@@ -78,7 +78,7 @@ Vertex MatrixGraph::next_vertex(Vertex vertex) {
   }
 }
 
-Vertex MatrixGraph::first_adjacent(Vertex vertex) {
+Vertex MatrixGraph::first_adyacent_vertex(Vertex vertex) {
   for (int i = 0; i < this->amount_vertex(); i++) {
     if (this->matrix[vertex][i] != -1) {
       return i;
@@ -87,8 +87,8 @@ Vertex MatrixGraph::first_adjacent(Vertex vertex) {
   return Vertex();
 }
 
-Vertex MatrixGraph::next_adjacent(Vertex vertex, Vertex adjacent) {
-  for (int i = adjacent + 1; i < this->amount_vertex(); i++) {
+Vertex MatrixGraph::next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) {
+  for (int i = ady_vertex + 1; i < this->amount_vertex(); i++) {
     if (this->matrix[vertex][i] != -1) {
       return i;
     }

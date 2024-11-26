@@ -148,26 +148,26 @@ class ListGraph : public Graph<Vertex, char> {
    */
   Vertex next_vertex(Vertex vertex) override;
   /**
-   * @brief Returns the first adjacent vertex of the given vertex.
+   * @brief Returns the first ady_vertex vertex of the given vertex.
    *
-   * This function retrieves the first vertex that is adjacent to the specified vertex.
+   * This function retrieves the first vertex that is ady_vertex to the specified vertex.
    *
-   * @param vertex The vertex for which the first adjacent vertex is to be found.
-   * @return Vertex The first adjacent vertex of the given vertex.
+   * @param vertex The vertex for which the first ady_vertex vertex is to be found.
+   * @return Vertex The first ady_vertex vertex of the given vertex.
    */
-  Vertex first_adjacent(Vertex vertex) override;
+  Vertex first_adyacent_vertex(Vertex vertex) override;
   /**
-   * @brief Retrieves the next adjacent vertex to the given vertex.
+   * @brief Retrieves the next ady_vertex vertex to the given vertex.
    *
-   * This function returns the next vertex that is adjacent to the specified vertex.
-   * If the specified adjacent vertex is the last adjacent vertex, the function may
+   * This function returns the next vertex that is ady_vertex to the specified vertex.
+   * If the specified ady_vertex vertex is the last ady_vertex vertex, the function may
    * return an invalid vertex or a sentinel value indicating the end of adjacency list.
    *
-   * @param vertex The vertex for which to find the next adjacent vertex.
-   * @param adjacent The current adjacent vertex.
-   * @return Vertex The next adjacent vertex to the given vertex.
+   * @param vertex The vertex for which to find the next ady_vertex vertex.
+   * @param ady_vertex The current ady_vertex vertex.
+   * @return Vertex The next ady_vertex vertex to the given vertex.
    */
-  Vertex next_adjacent(Vertex vertex, Vertex adjacent) override;
+  Vertex next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) override;
 
   /**
    * @brief Imprime la lista de adyacencia.

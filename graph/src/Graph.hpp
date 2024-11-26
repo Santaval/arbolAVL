@@ -124,27 +124,28 @@ class Graph {
    */
   virtual VertexType next_vertex(VertexType vertex) = 0;
   /**
-   * @brief Get the first adjacent vertex of the given vertex.
+   * @brief Get the first ady_vertex vertex of the given vertex.
    *
-   * This function returns the first vertex that is adjacent to the specified vertex.
+   * This function returns the first vertex that is ady_vertex to the specified vertex.
    * The definition of "first" is dependent on the specific implementation of the graph.
    *
-   * @param vertex The vertex for which to find the first adjacent vertex.
-   * @return VertexType The first adjacent vertex.
+   * @param vertex The vertex for which to find the first ady_vertex vertex.
+   * @return VertexType The first ady_vertex vertex.
    */
-  virtual VertexType first_adjacent(VertexType vertex) = 0;
+  virtual VertexType first_adyacent_vertex(VertexType vertex) = 0;
   /**
-   * @brief Get the next adjacent vertex to the given vertex.
+   * @brief Get the next ady_vertex vertex to the given vertex.
    *
-   * This function returns the next adjacent vertex to the specified vertex
-   * in the graph. If there are no more adjacent vertices, the function
+   * This function returns the next ady_vertex vertex to the specified vertex
+   * in the graph. If there are no more ady_vertex vertices, the function
    * should return a value indicating the end (implementation-specific).
    *
-   * @param vertex The vertex for which to find the next adjacent vertex.
-   * @param adjacent The current adjacent vertex.
-   * @return VertexType The next adjacent vertex.
+   * @param vertex The vertex for which to find the next ady_vertex vertex.
+   * @param ady_vertex The current ady_vertex vertex.
+   * @return VertexType The next ady_vertex vertex.
    */
-  virtual VertexType next_adjacent(VertexType vertex, VertexType adjacent) = 0;
+  virtual VertexType next_adyacent_vertex(VertexType vertex,
+        VertexType ady_vertex) = 0;
 
  public:
   /**
