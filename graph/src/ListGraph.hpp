@@ -48,5 +48,5 @@ public:
     /**
      * @brief Imprime la lista de adyacencia.
      */
-    void print_adjacency_list();
+    void print_graph();
 };
