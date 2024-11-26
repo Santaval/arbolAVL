@@ -13,9 +13,8 @@ int main() {
   graph->append_vertex('B');
   graph->append_vertex('C');
 
-  graph->delete_vertex(1);
+  graph->delete_vertex(graph->first_vertex());
 
   graph->print_matrix();
   graph->print_elements();
-  
 }

@@ -1,3 +1,4 @@
+// Copyright 2024 algoritmicos team. ECCI-UCR. CC BY 4.0
 #pragma once
 
 #include <vector>
@@ -7,194 +8,193 @@
 #include "Graph.hpp"
 #include "Vertex.hpp"
 
-
 class MatrixGraph : public Graph<Vertex, char> {
-private:
-    /**
-     * @brief A 2D matrix represented as a vector of vectors of doubles.
-     * 
-     * This data structure is used to store a matrix where each element is a double.
-     * Each inner vector represents a row in the matrix, and the outer vector 
-     * contains all the rows.
-     */
-    std::vector<std::vector<double>> matrix;
-    /**
-     * @brief A vector to store elements of type char.
-     */
-    std::vector<char> elements;
-public:
-    /**
-     * @brief Construct a new MatrixGraph object.
-     * 
-     * This constructor initializes a new instance of the MatrixGraph class.
-     * 
-     * @param args Arguments for the constructor (if any).
-     */
-    MatrixGraph(/* args */) : Graph() {}
-    /**
-     * @brief Destructor for the MatrixGraph class.
-     * 
-     * This destructor is responsible for cleaning up any resources
-     * allocated by the MatrixGraph instance.
-     */
-    ~MatrixGraph() {};
-    /**
-     * @brief Clears the graph, removing all vertices and edges.
-     * 
-     * This function overrides the clear method from the base class.
-     * It deallocates all resources associated with the graph and 
-     * resets it to an empty state.
-     */
-    void clear() override;
-    /**
-     * @brief Appends a vertex with the given element to the graph.
-     * 
-     * This function adds a new vertex to the graph and assigns it the specified element.
-     * 
-     * @param element The element to be assigned to the new vertex.
-     */
-    void append_vertex(char element) override;
+ private:
+  /**
+   * @brief A 2D matrix represented as a vector of vectors of doubles.
+   *
+   * This data structure is used to store a matrix where each element is a
+   * double. Each inner vector represents a row in the matrix, and the outer
+   * vector contains all the rows.
+   */
+  std::vector<std::vector<double>> matrix;
+  /**
+   * @brief A vector to store elements of type char.
+   */
+  std::vector<char> elements;
 
-   
+ public:
+  /**
+   * @brief Construct a new MatrixGraph object.
+   *
+   * This constructor initializes a new instance of the MatrixGraph class.
+   *
+   * @param args Arguments for the constructor (if any).
+   */
+  MatrixGraph(/* args */) : Graph() {}
+  /**
+   * @brief Destructor for the MatrixGraph class.
+   *
+   * This destructor is responsible for cleaning up any resources
+   * allocated by the MatrixGraph instance.
+   */
+  ~MatrixGraph() {}
+  /**
+   * @brief Clears the graph, removing all vertices and edges.
+   *
+   * This function overrides the clear method from the base class.
+   * It deallocates all resources associated with the graph and
+   * resets it to an empty state.
+   */
+  void clear() override;
+  /**
+   * @brief Appends a vertex with the given element to the graph.
+   *
+   * This function adds a new vertex to the graph and assigns it the specified
+   * element.
+   *
+   * @param element The element to be assigned to the new vertex.
+   */
+  void append_vertex(char element) override;
 
-    /**
-     * @brief Deletes a vertex from the graph.
-     * 
-     * This function removes the specified vertex from the graph, along with any edges
-     * connected to it. The graph's structure is updated accordingly to reflect the removal
-     * of the vertex.
-     * 
-     * @param vertex The vertex to be deleted from the graph.
-     */
-    void delete_vertex(Vertex vertex) override;
+  /**
+   * @brief Deletes a vertex from the graph.
+   *
+   * This function removes the specified vertex from the graph, along with any
+   * edges connected to it. The graph's structure is updated accordingly to
+   * reflect the removal of the vertex.
+   *
+   * @param vertex The vertex to be deleted from the graph.
+   */
+  void delete_vertex(Vertex vertex) override;
 
-    /**
-     * @brief Modifies the element associated with a given vertex.
-     * 
-     * This function updates the element stored at the specified vertex
-     * with a new character value.
-     * 
-     * @param vertex The vertex whose element is to be modified.
-     * @param newElement The new character value to be assigned to the vertex.
-     */
-    void modify_element(Vertex vertex, char newElement) override;
-    /**
-     * @brief Retrieves the element associated with the given vertex.
-     * 
-     * @param vertex The vertex whose associated element is to be retrieved.
-     * @return char The element associated with the specified vertex.
-     */
-    char element(Vertex vertex) override;
-    /**
-     * @brief Adds an edge between two vertices with a specified weight.
-     * 
-     * This function creates an edge between the given vertices (vertex1 and vertex2)
-     * and assigns the provided weight to that edge. If the edge already exists, 
-     * the weight will be updated to the new value.
-     * 
-     * @param vertex1 The first vertex of the edge.
-     * @param vertex2 The second vertex of the edge.
-     * @param weight The weight to be assigned to the edge.
-     */
-    void add_edge(Vertex vertex1, Vertex vertex2, double weight) override;
-    /**
-     * @brief Deletes an edge between two vertices in the graph.
-     * 
-     * This function removes the edge that connects the specified vertices
-     * vertex1 and vertex2. If there is no edge between the given vertices,
-     * the function does nothing.
-     * 
-     * @param vertex1 The first vertex of the edge to be deleted.
-     * @param vertex2 The second vertex of the edge to be deleted.
-     */
-    void delete_edge(Vertex vertex1, Vertex vertex2) override;
-    /**
-     * @brief Modifies the weight of the edge between two vertices.
-     * 
-     * This function updates the weight of the edge connecting the specified vertices
-     * to the new weight provided.
-     * 
-     * @param vertex1 The first vertex of the edge.
-     * @param vertex2 The second vertex of the edge.
-     * @param newWeight The new weight to be assigned to the edge.
-     */
-    void modify_weight(Vertex vertex1, Vertex vertex2, double newWeight) override;
-    /**
-     * @brief Calculates the weight of the edge between two vertices.
-     * 
-     * This function returns the weight of the edge connecting the given vertices
-     * in the graph. If there is no edge between the vertices, the behavior of this
-     * function depends on the implementation.
-     * 
-     * @param vertex1 The first vertex.
-     * @param vertex2 The second vertex.
-     * @return double The weight of the edge between vertex1 and vertex2.
-     */
-    double weight(Vertex vertex1, Vertex vertex2) override;
-    /**
-     * @brief Retrieves the first vertex in the graph.
-     * 
-     * This function returns the first vertex in the graph. The definition of 
-     * the "first" vertex depends on the internal representation of the graph.
-     * 
-     * @return Vertex The first vertex in the graph.
-     */
-    Vertex first_vertex() override;
-    /**
-     * @brief Retrieves the next vertex in the graph from the given vertex.
-     * 
-     * This function takes a vertex as input and returns the next vertex
-     * in the graph. The definition of the "next" vertex depends on the 
-     * specific implementation of the graph traversal algorithm.
-     * 
-     * @param vertex The current vertex from which the next vertex is to be found.
-     * @return Vertex The next vertex in the graph.
-     */
-    Vertex next_vertex(Vertex vertex) override;
-    /**
-     * @brief Returns the first adjacent vertex of the given vertex.
-     * 
-     * This function retrieves the first vertex that is adjacent to the specified vertex.
-     * 
-     * @param vertex The vertex for which the first adjacent vertex is to be found.
-     * @return Vertex The first adjacent vertex of the given vertex.
-     */
-    Vertex first_adjacent(Vertex vertex) override;
-    /**
-     * @brief Retrieves the next adjacent vertex to the given vertex.
-     * 
-     * This function returns the next vertex that is adjacent to the specified vertex.
-     * If the specified adjacent vertex is the last adjacent vertex, the function may
-     * return an invalid vertex or a sentinel value indicating the end of adjacency list.
-     * 
-     * @param vertex The vertex for which to find the next adjacent vertex.
-     * @param adjacent The current adjacent vertex.
-     * @return Vertex The next adjacent vertex to the given vertex.
-     */
-    Vertex next_adjacent(Vertex vertex, Vertex adjacent) override;
+  /**
+   * @brief Modifies the element associated with a given vertex.
+   *
+   * This function updates the element stored at the specified vertex
+   * with a new character value.
+   *
+   * @param vertex The vertex whose element is to be modified.
+   * @param newElement The new character value to be assigned to the vertex.
+   */
+  void modify_element(Vertex vertex, char newElement) override;
+  /**
+   * @brief Retrieves the element associated with the given vertex.
+   *
+   * @param vertex The vertex whose associated element is to be retrieved.
+   * @return char The element associated with the specified vertex.
+   */
+  char element(Vertex vertex) override;
+  /**
+   * @brief Adds an edge between two vertices with a specified weight.
+   *
+   * This function creates an edge between the given vertices (vertex1 and vertex2)
+   * and assigns the provided weight to that edge. If the edge already exists,
+   * the weight will be updated to the new value.
+   *
+   * @param vertex1 The first vertex of the edge.
+   * @param vertex2 The second vertex of the edge.
+   * @param weight The weight to be assigned to the edge.
+   */
+  void add_edge(Vertex vertex1, Vertex vertex2, double weight) override;
+  /**
+   * @brief Deletes an edge between two vertices in the graph.
+   *
+   * This function removes the edge that connects the specified vertices
+   * vertex1 and vertex2. If there is no edge between the given vertices,
+   * the function does nothing.
+   *
+   * @param vertex1 The first vertex of the edge to be deleted.
+   * @param vertex2 The second vertex of the edge to be deleted.
+   */
+  void delete_edge(Vertex vertex1, Vertex vertex2) override;
+  /**
+   * @brief Modifies the weight of the edge between two vertices.
+   *
+   * This function updates the weight of the edge connecting the specified
+   * vertices
+   * to the new weight provided.
+   *
+   * @param vertex1 The first vertex of the edge.
+   * @param vertex2 The second vertex of the edge.
+   * @param newWeight The new weight to be assigned to the edge.
+   */
+  void modify_weight(Vertex vertex1, Vertex vertex2, double newWeight) override;
+  /**
+   * @brief Calculates the weight of the edge between two vertices.
+   *
+   * This function returns the weight of the edge connecting the given vertices
+   * in the graph. If there is no edge between the vertices, the behavior of this
+   * function depends on the implementation.
+   *
+   * @param vertex1 The first vertex.
+   * @param vertex2 The second vertex.
+   * @return double The weight of the edge between vertex1 and vertex2.
+   */
+  double weight(Vertex vertex1, Vertex vertex2) override;
+  /**
+   * @brief Retrieves the first vertex in the graph.
+   *
+   * This function returns the first vertex in the graph. The definition of
+   * the "first" vertex depends on the internal representation of the graph.
+   *
+   * @return Vertex The first vertex in the graph.
+   */
+  Vertex first_vertex() override;
+  /**
+   * @brief Retrieves the next vertex in the graph from the given vertex.
+   *
+   * This function takes a vertex as input and returns the next vertex
+   * in the graph. The definition of the "next" vertex depends on the
+   * specific implementation of the graph traversal algorithm.
+   *
+   * @param vertex The current vertex from which the next vertex is to be found.
+   * @return Vertex The next vertex in the graph.
+   */
+  Vertex next_vertex(Vertex vertex) override;
+  /**
+   * @brief Returns the first adjacent vertex of the given vertex.
+   *
+   * This function retrieves the first vertex that is adjacent to the specified vertex.
+   *
+   * @param vertex The vertex for which the first adjacent vertex is to be found.
+   * @return Vertex The first adjacent vertex of the given vertex.
+   */
+  Vertex first_adjacent(Vertex vertex) override;
+  /**
+   * @brief Retrieves the next adjacent vertex to the given vertex.
+   *
+   * This function returns the next vertex that is adjacent to the specified vertex.
+   * If the specified adjacent vertex is the last adjacent vertex, the function may
+   * return an invalid vertex or a sentinel value indicating the end of adjacency list.
+   *
+   * @param vertex The vertex for which to find the next adjacent vertex.
+   * @param adjacent The current adjacent vertex.
+   * @return Vertex The next adjacent vertex to the given vertex.
+   */
+  Vertex next_adjacent(Vertex vertex, Vertex adjacent) override;
 
-    void print_matrix();
-    void print_elements();
+  void print_matrix();
+  void print_elements();
 
-private:
-     /**
-     * @brief Adds columns to the field in the matrix graph.
-     *
-     * This function is responsible for adding new columns to the existing field
-     * in the matrix graph. It modifies the internal structure of the matrix to
-     * accommodate the additional columns.
-     */
-    void add_cols_field();
+ private:
+  /**
+   * @brief Adds columns to the field in the matrix graph.
+   *
+   * This function is responsible for adding new columns to the existing field
+   * in the matrix graph. It modifies the internal structure of the matrix to
+   * accommodate the additional columns.
+   */
+  void add_cols_field();
 
-     /**
-     * @brief Removes columns from the field in the matrix graph.
-     *
-     * This function is responsible for removing specific columns from the field
-     * within the matrix graph structure. The exact columns to be removed and 
-     * the criteria for their removal are determined by the implementation details.
-     */
-    void remove_cols_field(int index);
+  /**
+   * @brief Removes columns from the field in the matrix graph.
+   *
+   * This function is responsible for removing specific columns from the field
+   * within the matrix graph structure. The exact columns to be removed and
+   * the criteria for their removal are determined by the implementation details.
+   */
+  void remove_cols_field(int index);
 
-    int find_vertex_index(Vertex vertex);
-
+  int find_vertex_index(Vertex vertex);
 };
