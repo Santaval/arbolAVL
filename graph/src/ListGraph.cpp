@@ -1,143 +1,171 @@
-// Copyright 2024 algoritmicos team. ECCI-UCR. CC BY 4.0
 #include "ListGraph.hpp"
-#include <iostream>
-#include <algorithm>
-#include <utility>
-#include <unordered_map>
-#include <vector>
-#include <limits>
-#include <string>
+#include <cstdlib>
+#include <cstring>
 
-// Constructor
-ListGraph::ListGraph() = default;
+// AdjacencyList methods
+void AdjacencyList::add_edge(Vertex v, double weight) {
+    if (edge_capacity == 0) {
+        edge_capacity = 2;
+        edges = new Edge[edge_capacity];
+    } else if (edge_count >= edge_capacity) {
+        edge_capacity *= 2;
+        Edge* new_edges = new Edge[edge_capacity];
+        std::memcpy(new_edges, edges, edge_count * sizeof(Edge));
+        delete[] edges;
+        edges = new_edges;
+    }
+    edges[edge_count++] = Edge(v, weight);
+}
 
-// Destructor
+void AdjacencyList::remove_edge(Vertex v) {
+    for (size_t i = 0; i < edge_count; ++i) {
+        if (edges[i].vertex.id == v.id) {
+            for (size_t j = i; j < edge_count - 1; ++j) {
+                edges[j] = edges[j + 1];
+            }
+            --edge_count;
+            break;
+        }
+    }
+}
+
+// ListGraph methods
+ListGraph::ListGraph() : adjacencyLists(nullptr), elements(nullptr), vertex_count(0), vertex_capacity(0) {}
+
 ListGraph::~ListGraph() {
-  clear();
+    clear();
 }
 
-// Clear the ListGraph
 void ListGraph::clear() {
-  this->adjacencyList.clear();
-  this->elements.clear();
-  this->size = 0;
+    for (size_t i = 0; i < vertex_count; ++i) {
+        delete[] adjacencyLists[i].edges;
+    }
+    delete[] adjacencyLists;
+    delete[] elements;
+
+    adjacencyLists = nullptr;
+    elements = nullptr;
+    vertex_count = 0;
+    vertex_capacity = 0;
 }
 
-// Add a vertex
+void ListGraph::ensure_vertex_capacity() {
+    if (vertex_capacity == 0) {
+        vertex_capacity = 2;
+        adjacencyLists = new AdjacencyList[vertex_capacity];
+        elements = new char[vertex_capacity];
+    } else if (vertex_count >= vertex_capacity) {
+        vertex_capacity *= 2;
+        AdjacencyList* new_lists = new AdjacencyList[vertex_capacity];
+        char* new_elements = new char[vertex_capacity];
+
+        std::memcpy(new_lists, adjacencyLists, vertex_count * sizeof(AdjacencyList));
+        std::memcpy(new_elements, elements, vertex_count * sizeof(char));
+
+        delete[] adjacencyLists;
+        delete[] elements;
+
+        adjacencyLists = new_lists;
+        elements = new_elements;
+    }
+}
+
 void ListGraph::append_vertex(char element) {
-  this->elements.push_back(element);
-  Vertex vertex(adjacencyList.size());
-  adjacencyList[vertex] = {};
-  ++this->size;
+    ensure_vertex_capacity();
+
+    Vertex v(vertex_count);
+    elements[vertex_count] = element;
+    adjacencyLists[vertex_count] = AdjacencyList();
+    adjacencyLists[vertex_count].vertex = v;
+
+    ++vertex_count;
 }
 
-// Delete a vertex
 void ListGraph::delete_vertex(Vertex vertex) {
-  adjacencyList.erase(vertex);
+    size_t index = vertex.id;
 
-  for (auto &[key, edges] : adjacencyList) {
-    edges.erase(std::remove_if(edges.begin(), edges.end(),
-                               [vertex](const auto &edge) {
-                                 return edge.first == vertex;
-                               }), edges.end());
-  }
-  this->elements.erase(this->elements.begin() + vertex);
-  this->size--;
+    delete[] adjacencyLists[index].edges;
+    for (size_t i = index; i < vertex_count - 1; ++i) {
+        adjacencyLists[i] = adjacencyLists[i + 1];
+        elements[i] = elements[i + 1];
+    }
+    --vertex_count;
+
+    for (size_t i = 0; i < vertex_count; ++i) {
+        adjacencyLists[i].remove_edge(vertex);
+    }
 }
 
-// Modify a vertex
 void ListGraph::modify_element(Vertex vertex, char new_element) {
-  this->elements[vertex] = new_element;
+    if (vertex.id < vertex_count) {
+        elements[vertex.id] = new_element;
+    }
 }
 
-// Get the value of a vertex
-char ListGraph::element(Vertex vertex) {
-  return this->elements[vertex];
+char ListGraph::element(Vertex vertex) const {
+    if (vertex.id < vertex_count) {
+        return elements[vertex.id];
+    }
+    return '\0';
 }
 
-// Add an edge
 void ListGraph::add_edge(Vertex v1, Vertex v2, double weight) {
-  if (v1 == v2 || weight <= 0)
-    return;
+    if (v1.id >= vertex_count || v2.id >= vertex_count || weight <= 0) {
+        return;
+    }
 
-  adjacencyList[v1].emplace_back(v2, weight);
-  adjacencyList[v2].emplace_back(v1, weight);
+    adjacencyLists[v1.id].add_edge(v2, weight);
+    adjacencyLists[v2.id].add_edge(v1, weight);
 }
 
-// Delete an edge
 void ListGraph::delete_edge(Vertex v1, Vertex v2) {
-  auto &edges1 = adjacencyList[v1];
-  edges1.erase(std::remove_if(edges1.begin(), edges1.end(),
-                              [v2](const auto &edge) {
-                                return edge.first == v2;
-                              }),
-               edges1.end());
-
-  auto &edges2 = adjacencyList[v2];
-  edges2.erase(std::remove_if(edges2.begin(), edges2.end(),
-                              [v1](const auto &edge)
-                              { return edge.first == v1; }),
-               edges2.end());
+    adjacencyLists[v1.id].remove_edge(v2);
+    adjacencyLists[v2.id].remove_edge(v1);
 }
 
-// Modify the weight of an edge
 void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
-  for (auto &edge : adjacencyList[v1]) {
-    if (edge.first == v2) {
-      edge.second = new_weight;
-      break;
+    for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
+        if (adjacencyLists[v1.id].edges[i].vertex.id == v2.id) {
+            adjacencyLists[v1.id].edges[i].weight = new_weight;
+            break;
+        }
     }
-  }
 
-  for (auto &edge : adjacencyList[v2]) {
-    if (edge.first == v1) {
-      edge.second = new_weight;
-      break;
+    for (size_t i = 0; i < adjacencyLists[v2.id].edge_count; ++i) {
+        if (adjacencyLists[v2.id].edges[i].vertex.id == v1.id) {
+            adjacencyLists[v2.id].edges[i].weight = new_weight;
+            break;
+        }
     }
-  }
 }
 
-// Get the weight of an edge
-double ListGraph::weight(Vertex v1, Vertex v2) {
-  for (const auto &edge : adjacencyList.at(v1)) {
-    if (edge.first == v2) {
-      return edge.second;
+double ListGraph::weight(Vertex v1, Vertex v2) const {
+    for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
+        if (adjacencyLists[v1.id].edges[i].vertex.id == v2.id) {
+            return adjacencyLists[v1.id].edges[i].weight;
+        }
     }
-  }
-  return std::numeric_limits<double>::infinity();
+    return -1;
 }
 
-// Get the first vertex
-Vertex ListGraph::first_vertex() {
-  if (adjacencyList.empty())
-    return Vertex();
-  return adjacencyList.begin()->first;
+Vertex ListGraph::first_vertex() const {
+    return vertex_count > 0 ? adjacencyLists[0].vertex : Vertex(-1);
 }
 
-// Get the next vertex
-Vertex ListGraph::next_vertex(Vertex vertex) {
-  auto it = adjacencyList.find(vertex);
-  if (it != adjacencyList.end() && ++it != adjacencyList.end()) {
-    return it->first;
-  }
-  return Vertex();
+Vertex ListGraph::next_vertex(Vertex vertex) const {
+    return vertex.id + 1 < vertex_count ? adjacencyLists[vertex.id + 1].vertex : Vertex(-1);
 }
 
-// Get the first ady_vertex vertex
-Vertex ListGraph::first_adyacent_vertex(Vertex vertex) {
-  if (!adjacencyList.at(vertex).empty()) {
-    return adjacencyList.at(vertex).front().first;
-  }
-  return Vertex();
+Vertex ListGraph::first_adjacent_vertex(Vertex vertex) const {
+    return adjacencyLists[vertex.id].edge_count > 0 ? adjacencyLists[vertex.id].edges[0].vertex : Vertex(-1);
 }
 
-// Get the next ady_vertex vertex
-Vertex ListGraph::next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) {
-  const auto &edges = adjacencyList.at(vertex);
-  for (size_t i = 0; i < edges.size(); ++i) {
-    if (edges[i].first == ady_vertex && i + 1 < edges.size()) {
-      return edges[i + 1].first;
+Vertex ListGraph::next_adjacent_vertex(Vertex vertex, Vertex adj_vertex) const {
+    const auto& list = adjacencyLists[vertex.id];
+    for (size_t i = 0; i < list.edge_count; ++i) {
+        if (list.edges[i].vertex.id == adj_vertex.id && i + 1 < list.edge_count) {
+            return list.edges[i + 1].vertex;
+        }
     }
-  }
-  return Vertex();
+    return Vertex(-1);
 }
