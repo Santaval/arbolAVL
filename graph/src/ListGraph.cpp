@@ -1,6 +1,4 @@
 #include "ListGraph.hpp"
-#include <cstdlib>
-#include <cstring>
 
 // AdjacencyList methods
 void AdjacencyList::add_edge(Vertex v, double weight) {
@@ -10,7 +8,12 @@ void AdjacencyList::add_edge(Vertex v, double weight) {
     } else if (edge_count >= edge_capacity) {
         edge_capacity *= 2;
         Edge* new_edges = new Edge[edge_capacity];
-        std::memcpy(new_edges, edges, edge_count * sizeof(Edge));
+
+        // Copiar manualmente los datos en lugar de usar std::memcpy
+        for (size_t i = 0; i < edge_count; ++i) {
+            new_edges[i] = edges[i];
+        }
+
         delete[] edges;
         edges = new_edges;
     }
@@ -56,12 +59,18 @@ void ListGraph::ensure_vertex_capacity() {
         elements = new char[vertex_capacity];
     } else if (vertex_count >= vertex_capacity) {
         vertex_capacity *= 2;
+
+        // Crear nuevos arrays
         AdjacencyList* new_lists = new AdjacencyList[vertex_capacity];
         char* new_elements = new char[vertex_capacity];
 
-        std::memcpy(new_lists, adjacencyLists, vertex_count * sizeof(AdjacencyList));
-        std::memcpy(new_elements, elements, vertex_count * sizeof(char));
+        // Copiar datos manualmente
+        for (size_t i = 0; i < vertex_count; ++i) {
+            new_lists[i] = adjacencyLists[i];
+            new_elements[i] = elements[i];
+        }
 
+        // Liberar memoria antigua
         delete[] adjacencyLists;
         delete[] elements;
 
