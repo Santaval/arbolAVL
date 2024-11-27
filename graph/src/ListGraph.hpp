@@ -27,10 +27,6 @@ public:
 
     AdjacencyList() : vertex(Vertex()), edges(nullptr), edge_count(0), edge_capacity(0) {}
 
-    ~AdjacencyList() {
-        delete[] edges;
-    }
-
     void add_edge(Vertex v, double weight);
     void remove_edge(Vertex v);
 };
