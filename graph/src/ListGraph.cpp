@@ -5,7 +5,7 @@
 void AdjacencyList::add_edge(Vertex v, double weight) {
     // Verificar si ya existe una arista hacia el vértice 'v'
     for (size_t i = 0; i < edge_count; ++i) {
-        if (edges[i].vertex.id == v.id) {
+        if (edges[i].vertex.number == v.number) {
             return; // Arista ya existe, no hacer nada
         }
     }
@@ -30,7 +30,7 @@ void AdjacencyList::add_edge(Vertex v, double weight) {
 
 void AdjacencyList::remove_edge(Vertex v) {
     for (size_t i = 0; i < edge_count; ++i) {
-        if (edges[i].vertex.id == v.id) {
+        if (edges[i].vertex.number == v.number) {
             for (size_t j = i; j < edge_count - 1; ++j) {
                 edges[j] = edges[j + 1];
             }
@@ -99,7 +99,7 @@ void ListGraph::append_vertex(char element) {
 }
 
 void ListGraph::delete_vertex(Vertex vertex) {
-    size_t index = vertex.id;
+    size_t index = vertex.number;
 
     delete[] adjacencyLists[index].edges;
     for (size_t i = index; i < vertex_count - 1; ++i) {
@@ -114,36 +114,36 @@ void ListGraph::delete_vertex(Vertex vertex) {
 }
 
 void ListGraph::modify_element(Vertex vertex, char new_element) {
-    if (vertex.id < (int)vertex_count) {
-        elements[vertex.id] = new_element;
+    if (vertex.number < (int)vertex_count) {
+        elements[vertex.number] = new_element;
     }
 }
 
 char ListGraph::element(Vertex vertex) const {
-    if (vertex.id < (int)vertex_count) {
-        return elements[vertex.id];
+    if (vertex.number < (int)vertex_count) {
+        return elements[vertex.number];
     }
     return '\0';
 }
 
 void ListGraph::add_edge(Vertex v1, Vertex v2, double weight) {
     // Los vertices no existen y el peso es invalido
-    if (v1.id >= (int)vertex_count || v2.id >= (int)vertex_count || weight <= 0) {
+    if (v1.number >= (int)vertex_count || v2.number >= (int)vertex_count || weight <= 0) {
         return;
     }
 
     // No aristas paralelas
-    if (v1.id == v2.id) {
+    if (v1.number == v2.number) {
         return; // No se permiten lazos
     }
 
-    adjacencyLists[v1.id].add_edge(v2, weight);
-    adjacencyLists[v2.id].add_edge(v1, weight);
+    adjacencyLists[v1.number].add_edge(v2, weight);
+    adjacencyLists[v2.number].add_edge(v1, weight);
 }
 
 void ListGraph::delete_edge(Vertex v1, Vertex v2) {
-    adjacencyLists[v1.id].remove_edge(v2);
-    adjacencyLists[v2.id].remove_edge(v1);
+    adjacencyLists[v1.number].remove_edge(v2);
+    adjacencyLists[v2.number].remove_edge(v1);
 }
 
 void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
@@ -151,18 +151,18 @@ void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
     bool found_v2_to_v1 = false;
 
     // Modificar peso en la dirección v1 -> v2 si la arista existe
-    for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
-        if (adjacencyLists[v1.id].edges[i].vertex.id == v2.id) {
-            adjacencyLists[v1.id].edges[i].weight = new_weight;
+    for (size_t i = 0; i < adjacencyLists[v1.number].edge_count; ++i) {
+        if (adjacencyLists[v1.number].edges[i].vertex.number == v2.number) {
+            adjacencyLists[v1.number].edges[i].weight = new_weight;
             found_v1_to_v2 = true;
             break;
         }
     }
 
     // Modificar peso en la dirección v2 -> v1 si la arista existe
-    for (size_t i = 0; i < adjacencyLists[v2.id].edge_count; ++i) {
-        if (adjacencyLists[v2.id].edges[i].vertex.id == v1.id) {
-            adjacencyLists[v2.id].edges[i].weight = new_weight;
+    for (size_t i = 0; i < adjacencyLists[v2.number].edge_count; ++i) {
+        if (adjacencyLists[v2.number].edges[i].vertex.number == v1.number) {
+            adjacencyLists[v2.number].edges[i].weight = new_weight;
             found_v2_to_v1 = true;
             break;
         }
@@ -171,15 +171,15 @@ void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
     // Si alguna arista no fue encontrada
     if (!found_v1_to_v2 || !found_v2_to_v1) {
         std::cout << "Una o ambas aristas no existen entre los vértices " <<
-                v1.id << "-" << v2.id << std::endl;
+                v1.number << "-" << v2.number << std::endl;
     }
 }
 
 
 double ListGraph::weight(Vertex v1, Vertex v2) const {
-    for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
-        if (adjacencyLists[v1.id].edges[i].vertex.id == v2.id) {
-            return adjacencyLists[v1.id].edges[i].weight;
+    for (size_t i = 0; i < adjacencyLists[v1.number].edge_count; ++i) {
+        if (adjacencyLists[v1.number].edges[i].vertex.number == v2.number) {
+            return adjacencyLists[v1.number].edges[i].weight;
         }
     }
     return -1;
@@ -190,17 +190,17 @@ Vertex ListGraph::first_vertex() const {
 }
 
 Vertex ListGraph::next_vertex(Vertex vertex) const {
-    return vertex.id + 1 < (int)vertex_count ? adjacencyLists[vertex.id + 1].vertex : Vertex(-1);
+    return vertex.number + 1 < (int)vertex_count ? adjacencyLists[vertex.number + 1].vertex : Vertex(-1);
 }
 
 Vertex ListGraph::first_adjacent_vertex(Vertex vertex) const {
-    return adjacencyLists[vertex.id].edge_count > 0 ? adjacencyLists[vertex.id].edges[0].vertex : Vertex(-1);
+    return adjacencyLists[vertex.number].edge_count > 0 ? adjacencyLists[vertex.number].edges[0].vertex : Vertex(-1);
 }
 
 Vertex ListGraph::next_adjacent_vertex(Vertex vertex, Vertex adj_vertex) const {
-    const auto& list = adjacencyLists[vertex.id];
+    const auto& list = adjacencyLists[vertex.number];
     for (size_t i = 0; i < list.edge_count; ++i) {
-        if (list.edges[i].vertex.id == adj_vertex.id && i + 1 < list.edge_count) {
+        if (list.edges[i].vertex.number == adj_vertex.number && i + 1 < list.edge_count) {
             return list.edges[i + 1].vertex;
         }
     }

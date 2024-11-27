@@ -2,13 +2,7 @@
 #define LIST_GRAPH_HPP
 
 #include <cstddef>
-
-class Vertex {
-public:
-    int id;
-    Vertex() : id(-1) {}
-    Vertex(int id) : id(id) {}
-};
+#include "Vertex.hpp"
 
 class Edge {
 public:
