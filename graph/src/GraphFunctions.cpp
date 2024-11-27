@@ -6,23 +6,23 @@
 // 1. Contar aristas en el grafo
 int GraphFunctions::count_edges(const ListGraph& graph) {
     int edge_count = 0;
-    for (Vertex v = graph.first_vertex(); v.id != -1; v = graph.next_vertex(v)) {
-        edge_count += graph.adjacencyLists[v.id].edge_count;
+    for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
+        edge_count += graph.adjacencyLists[v.number].edge_count;
     }
     return edge_count / 2; // Dividir entre 2 porque es no dirigido
 }
 
 // 2. Contar vértices adyacentes de un vértice dado
 int GraphFunctions::count_adjacent_vertices(const ListGraph& graph, Vertex v) {
-    if (v.id >= (int)graph.vertex_count) return 0; // Vértice inválido
-    return graph.adjacencyLists[v.id].edge_count;
+    if (v.number >= (int)graph.vertex_count) return 0; // Vértice inválido
+    return graph.adjacencyLists[v.number].edge_count;
 }
 
 // 3. Verificar si un grafo es conexo usando DFS
 void dfs_helper(const ListGraph& graph, Vertex v, bool* visited) {
-    visited[v.id] = true;
-    for (Vertex adj = graph.first_adjacent_vertex(v); adj.id != -1; adj = graph.next_adjacent_vertex(v, adj)) {
-        if (!visited[adj.id]) {
+    visited[v.number] = true;
+    for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+        if (!visited[adj.number]) {
             dfs_helper(graph, adj, visited);
         }
     }
@@ -47,15 +47,15 @@ bool GraphFunctions::is_connected_bfs(const ListGraph& graph) {
     std::queue<Vertex> q;
 
     q.push(graph.first_vertex());
-    visited[graph.first_vertex().id] = true;
+    visited[graph.first_vertex().number] = true;
 
     while (!q.empty()) {
         Vertex v = q.front();
         q.pop();
 
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.id != -1; adj = graph.next_adjacent_vertex(v, adj)) {
-            if (!visited[adj.id]) {
-                visited[adj.id] = true;
+        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+            if (!visited[adj.number]) {
+                visited[adj.number] = true;
                 q.push(adj);
             }
         }
@@ -77,7 +77,7 @@ void GraphFunctions::dijkstra(const ListGraph& graph, Vertex source, double* dis
     for (size_t i = 0; i < graph.vertex_count; ++i) {
         distances[i] = std::numeric_limits<double>::infinity();
     }
-    distances[source.id] = 0;
+    distances[source.number] = 0;
 
     for (size_t i = 0; i < graph.vertex_count; ++i) {
         Vertex current(-1);
@@ -89,13 +89,13 @@ void GraphFunctions::dijkstra(const ListGraph& graph, Vertex source, double* dis
             }
         }
 
-        if (current.id == -1) break;
-        visited[current.id] = true;
+        if (current.number == -1) break;
+        visited[current.number] = true;
 
-        for (Vertex adj = graph.first_adjacent_vertex(current); adj.id != -1; adj = graph.next_adjacent_vertex(current, adj)) {
+        for (Vertex adj = graph.first_adjacent_vertex(current); adj.number != -1; adj = graph.next_adjacent_vertex(current, adj)) {
             double weight = graph.weight(current, adj);
-            if (!visited[adj.id] && distances[current.id] + weight < distances[adj.id]) {
-                distances[adj.id] = distances[current.id] + weight;
+            if (!visited[adj.number] && distances[current.number] + weight < distances[adj.number]) {
+                distances[adj.number] = distances[current.number] + weight;
             }
         }
     }
@@ -117,9 +117,9 @@ void GraphFunctions::floyd_warshall(const ListGraph& graph, double** distances) 
         }
     }
 
-    for (Vertex v = graph.first_vertex(); v.id != -1; v = graph.next_vertex(v)) {
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.id != -1; adj = graph.next_adjacent_vertex(v, adj)) {
-            distances[v.id][adj.id] = graph.weight(v, adj);
+    for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
+        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+            distances[v.number][adj.number] = graph.weight(v, adj);
         }
     }
 
@@ -172,10 +172,10 @@ void GraphFunctions::prim(const ListGraph& graph, int* parent) {
         in_mst[u] = true;
 
         // Actualizar las claves de los vértices adyacentes
-        for (Vertex adj = graph.first_adjacent_vertex(Vertex(u)); adj.id != -1; adj = graph.next_adjacent_vertex(Vertex(u), adj)) {
-            if (!in_mst[adj.id] && graph.weight(Vertex(u), adj) < key[adj.id]) {
-                key[adj.id] = graph.weight(Vertex(u), adj);
-                parent[adj.id] = u;
+        for (Vertex adj = graph.first_adjacent_vertex(Vertex(u)); adj.number != -1; adj = graph.next_adjacent_vertex(Vertex(u), adj)) {
+            if (!in_mst[adj.number] && graph.weight(Vertex(u), adj) < key[adj.number]) {
+                key[adj.number] = graph.weight(Vertex(u), adj);
+                parent[adj.number] = u;
             }
         }
     }
@@ -211,10 +211,10 @@ void GraphFunctions::kruskal(const ListGraph& graph, std::vector<EdgeDetail>& ms
     std::vector<EdgeDetail> edges;
 
     // Obtener todas las aristas
-    for (Vertex v = graph.first_vertex(); v.id != -1; v = graph.next_vertex(v)) {
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.id != -1; adj = graph.next_adjacent_vertex(v, adj)) {
-            if (v.id < adj.id) { // Evitar duplicados
-                edges.push_back({v.id, adj.id, graph.weight(v, adj)});
+    for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
+        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+            if (v.number < adj.number) { // Evitar duplicados
+                edges.push_back({v.number, adj.number, graph.weight(v, adj)});
             }
         }
     }
