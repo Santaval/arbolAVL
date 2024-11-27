@@ -6,7 +6,7 @@
 #define NULL_VERTEX -1
 
 class Vertex {
- private:
+ public:
   int number;
 
  public:
@@ -19,16 +19,4 @@ class Vertex {
   bool operator==(const Vertex &number);
   bool operator==(const int number);
   operator int() const;
-
-  // Getter para el número (útil para hashing)
-  int get_number() const { return number; }
 };
-
-namespace std {
-template <>
-struct hash<Vertex> {
-    size_t operator()(const Vertex &vertex) const {
-        return std::hash<int>()(vertex.get_number());
-    }
-};
-}
