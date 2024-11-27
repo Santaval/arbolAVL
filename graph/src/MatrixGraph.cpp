@@ -1,6 +1,4 @@
 // Copyright 2024 algoritmicos team. ECCI-UCR. CC BY 4.0
-#pragma once
-
 #include "MatrixGraph.hpp"
 #include <iostream>
 
@@ -66,7 +64,7 @@ Vertex MatrixGraph::first_vertex() {
   if (this->amount_vertex() == 0) {
     return Vertex();
   } else {
-    return 0;
+    return Vertex(0);
   }
 }
 
@@ -74,14 +72,14 @@ Vertex MatrixGraph::next_vertex(Vertex vertex) {
   if (vertex == this->amount_vertex() - 1) {
     return Vertex();
   } else {
-    return vertex + 1;
+    return Vertex(vertex + 1);
   }
 }
 
 Vertex MatrixGraph::first_adyacent_vertex(Vertex vertex) {
   for (int i = 0; i < this->amount_vertex(); i++) {
     if (this->matrix[vertex][i] != -1) {
-      return i;
+      // return i;
     }
   }
   return Vertex();
@@ -90,7 +88,7 @@ Vertex MatrixGraph::first_adyacent_vertex(Vertex vertex) {
 Vertex MatrixGraph::next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) {
   for (int i = ady_vertex + 1; i < this->amount_vertex(); i++) {
     if (this->matrix[vertex][i] != -1) {
-      return i;
+      // return i;
     }
   }
   return Vertex();
