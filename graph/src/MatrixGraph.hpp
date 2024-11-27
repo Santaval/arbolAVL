@@ -9,7 +9,7 @@
 #include "Vertex.hpp"
 
 class MatrixGraph : public Graph<Vertex, char> {
- private:
+  private:
   /**
    * @brief A 2D matrix represented as a vector of vectors of doubles.
    *
@@ -17,13 +17,13 @@ class MatrixGraph : public Graph<Vertex, char> {
    * double. Each inner vector represents a row in the matrix, and the outer
    * vector contains all the rows.
    */
-  std::vector<std::vector<double>> matrix;
+  double **matrix = nullptr;
   /**
    * @brief A vector to store elements of type char.
    */
   std::vector<char> elements;
 
- public:
+  public:
   /**
    * @brief Construct a new MatrixGraph object.
    *
@@ -174,27 +174,9 @@ class MatrixGraph : public Graph<Vertex, char> {
    */
   Vertex next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) override;
 
-  void print_matrix();
-  void print_elements();
-
- private:
-  /**
-   * @brief Adds columns to the field in the matrix graph.
-   *
-   * This function is responsible for adding new columns to the existing field
-   * in the matrix graph. It modifies the internal structure of the matrix to
-   * accommodate the additional columns.
-   */
-  void add_cols_field();
-
-  /**
-   * @brief Removes columns from the field in the matrix graph.
-   *
-   * This function is responsible for removing specific columns from the field
-   * within the matrix graph structure. The exact columns to be removed and
-   * the criteria for their removal are determined by the implementation details.
-   */
-  void remove_cols_field(int index);
-
-  int find_vertex_index(Vertex vertex);
+  private:
+    void increaseMatrixSize();
+    void decreaseMatrixSize();
+    void copyMatrix(double **newMatrix, double **oldMatrix, int size);
+    void deleteMatrix();
 };

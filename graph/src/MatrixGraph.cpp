@@ -3,36 +3,29 @@
 #include <iostream>
 
 void MatrixGraph::clear() {
-  this->matrix.clear();
+  // Free the memory allocated for the matrix
+  for (int i = 0; i < this->amount_vertex(); i++) {
+    delete[] this->matrix[i];
+  }
+  delete[] this->matrix;
+  // Clear the elements vector
   this->elements.clear();
-  this->size = 0;
 }
 
 void MatrixGraph::append_vertex(char element) {
+  // Allocate memory for the new matrix
+  this->increaseMatrixSize();
+  // Update the matrix and elements
   this->elements.push_back(element);
-  const int newSize = this->amount_vertex() + 1;
-  this->matrix.push_back(std::vector<double>(newSize, -1));
-  this->add_cols_field();
   this->size++;
 }
 
-void MatrixGraph::add_cols_field() {
-  for (int i = 0; i < this->amount_vertex(); i++) {
-    this->matrix[i].push_back(-1);
-  }
-}
 
-void MatrixGraph::remove_cols_field(int index) {
-  for (int i = 0; i < this->amount_vertex(); i++) {
-    this->matrix[i].erase(this->matrix[i].begin() + index);
-  }
-}
 
 void MatrixGraph::delete_vertex(Vertex vertex) {
-  this->elements.erase(this->elements.begin() + vertex);
-  this->remove_cols_field(vertex);
-  this->elements.erase(this->elements.begin() + vertex);
+  this->decreaseMatrixSize();
   this->size--;
+  this->elements.erase(this->elements.begin() + vertex);
 }
 
 void MatrixGraph::modify_element(Vertex vertex, char newElement) {
@@ -92,4 +85,59 @@ Vertex MatrixGraph::next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) {
     }
   }
   return Vertex();
+}
+
+void MatrixGraph::increaseMatrixSize() {
+  // Allocate memory for the new matrix
+  int newSize = this->amount_vertex() + 1;
+  double** newMatrix = new double*[newSize];
+
+  for (int i = 0; i < newSize; i++) {
+    newMatrix[i] = new double[newSize];
+  }
+
+  // Copy the old matrix into the new matrix
+  this->copyMatrix(newMatrix, this->matrix, this->amount_vertex());
+
+  // Initialize the new row and column
+  for (int i = 0; i < newSize; i++) {
+    newMatrix[i][newSize - 1] = -1;
+    newMatrix[newSize - 1][i] = -1;
+  }
+
+  this->deleteMatrix();
+  this->matrix = newMatrix;
+}
+
+void MatrixGraph::decreaseMatrixSize() {
+  // Allocate memory for the new matrix
+  int newSize = this->amount_vertex() - 1;
+  double** newMatrix = new double*[newSize];
+
+  for (int i = 0; i < newSize; i++) {
+    newMatrix[i] = new double[newSize];
+  }
+
+  // Copy the old matrix into the new matrix
+  this->copyMatrix(newMatrix, this->matrix, newSize);
+
+  this->deleteMatrix();
+  this->matrix = newMatrix;
+}
+
+void MatrixGraph::copyMatrix(double** newMatrix, double** oldMatrix, int size) {
+  // Copy the old matrix into the new matrix
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      newMatrix[i][j] = oldMatrix[i][j];
+    }
+  }
+}
+
+void MatrixGraph::deleteMatrix() {
+  // Free the memory allocated for the matrix
+  for (int i = 0; i < size; i++) {
+    delete[] this->matrix[i];
+  }
+  delete[] this->matrix;
 }
