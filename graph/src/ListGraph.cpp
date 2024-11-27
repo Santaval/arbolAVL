@@ -114,13 +114,13 @@ void ListGraph::delete_vertex(Vertex vertex) {
 }
 
 void ListGraph::modify_element(Vertex vertex, char new_element) {
-    if (vertex.id < vertex_count) {
+    if (vertex.id < (int)vertex_count) {
         elements[vertex.id] = new_element;
     }
 }
 
 char ListGraph::element(Vertex vertex) const {
-    if (vertex.id < vertex_count) {
+    if (vertex.id < (int)vertex_count) {
         return elements[vertex.id];
     }
     return '\0';
@@ -128,7 +128,7 @@ char ListGraph::element(Vertex vertex) const {
 
 void ListGraph::add_edge(Vertex v1, Vertex v2, double weight) {
     // Los vertices no existen y el peso es invalido
-    if (v1.id >= vertex_count || v2.id >= vertex_count || weight <= 0) {
+    if (v1.id >= (int)vertex_count || v2.id >= (int)vertex_count || weight <= 0) {
         return;
     }
 
@@ -190,7 +190,7 @@ Vertex ListGraph::first_vertex() const {
 }
 
 Vertex ListGraph::next_vertex(Vertex vertex) const {
-    return vertex.id + 1 < vertex_count ? adjacencyLists[vertex.id + 1].vertex : Vertex(-1);
+    return vertex.id + 1 < (int)vertex_count ? adjacencyLists[vertex.id + 1].vertex : Vertex(-1);
 }
 
 Vertex ListGraph::first_adjacent_vertex(Vertex vertex) const {

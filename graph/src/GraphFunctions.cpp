@@ -14,7 +14,7 @@ int GraphFunctions::count_edges(const ListGraph& graph) {
 
 // 2. Contar vértices adyacentes de un vértice dado
 int GraphFunctions::count_adjacent_vertices(const ListGraph& graph, Vertex v) {
-    if (v.id >= graph.vertex_count) return 0; // Vértice inválido
+    if (v.id >= (int)graph.vertex_count) return 0; // Vértice inválido
     return graph.adjacencyLists[v.id].edge_count;
 }
 
