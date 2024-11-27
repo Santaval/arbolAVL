@@ -171,7 +171,7 @@ void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
     // Si alguna arista no fue encontrada
     if (!found_v1_to_v2 || !found_v2_to_v1) {
         std::cout << "Una o ambas aristas no existen entre los vértices " <<
-                v1 << "-" << v2 << std::endl;
+                v1.id << "-" << v2.id << std::endl;
     }
 }
 
