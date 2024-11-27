@@ -36,7 +36,9 @@ public:
 };
 
 class ListGraph {
-private:
+// Por facilidad para que las funciones que trabajan sobre el grafo
+// puedan hacerlo con más facilidad
+public:
     AdjacencyList* adjacencyLists;
     char* elements;
     size_t vertex_count;
