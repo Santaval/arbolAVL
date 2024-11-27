@@ -1,22 +1,30 @@
+#include <iostream>
 #include "ListGraph.hpp"
 
 // AdjacencyList methods
 void AdjacencyList::add_edge(Vertex v, double weight) {
+    // Verificar si ya existe una arista hacia el vértice 'v'
+    for (size_t i = 0; i < edge_count; ++i) {
+        if (edges[i].vertex.id == v.id) {
+            return; // Arista ya existe, no hacer nada
+        }
+    }
+
+    // Asegurarnos de que haya espacio para la nueva arista
     if (edge_capacity == 0) {
         edge_capacity = 2;
         edges = new Edge[edge_capacity];
     } else if (edge_count >= edge_capacity) {
         edge_capacity *= 2;
         Edge* new_edges = new Edge[edge_capacity];
-
-        // Copiar manualmente los datos en lugar de usar std::memcpy
         for (size_t i = 0; i < edge_count; ++i) {
             new_edges[i] = edges[i];
         }
-
         delete[] edges;
         edges = new_edges;
     }
+
+    // Agregar la nueva arista
     edges[edge_count++] = Edge(v, weight);
 }
 
@@ -119,8 +127,14 @@ char ListGraph::element(Vertex vertex) const {
 }
 
 void ListGraph::add_edge(Vertex v1, Vertex v2, double weight) {
+    // Los vertices no existen y el peso es invalido
     if (v1.id >= vertex_count || v2.id >= vertex_count || weight <= 0) {
         return;
+    }
+
+    // No aristas paralelas
+    if (v1.id == v2.id) {
+        return; // No se permiten lazos
     }
 
     adjacencyLists[v1.id].add_edge(v2, weight);
@@ -133,20 +147,34 @@ void ListGraph::delete_edge(Vertex v1, Vertex v2) {
 }
 
 void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
+    bool found_v1_to_v2 = false;
+    bool found_v2_to_v1 = false;
+
+    // Modificar peso en la dirección v1 -> v2 si la arista existe
     for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
         if (adjacencyLists[v1.id].edges[i].vertex.id == v2.id) {
             adjacencyLists[v1.id].edges[i].weight = new_weight;
+            found_v1_to_v2 = true;
             break;
         }
     }
 
+    // Modificar peso en la dirección v2 -> v1 si la arista existe
     for (size_t i = 0; i < adjacencyLists[v2.id].edge_count; ++i) {
         if (adjacencyLists[v2.id].edges[i].vertex.id == v1.id) {
             adjacencyLists[v2.id].edges[i].weight = new_weight;
+            found_v2_to_v1 = true;
             break;
         }
     }
+
+    // Si alguna arista no fue encontrada
+    if (!found_v1_to_v2 || !found_v2_to_v1) {
+        std::cout << "Una o ambas aristas no existen entre los vértices " <<
+                v1 << "-" << v2 << std::endl;
+    }
 }
+
 
 double ListGraph::weight(Vertex v1, Vertex v2) const {
     for (size_t i = 0; i < adjacencyLists[v1.id].edge_count; ++i) {
