@@ -1,6 +1,7 @@
 #ifndef GRAPH_FUNCTIONS_HPP
 #define GRAPH_FUNCTIONS_HPP
 
+#include "Vertex.hpp"
 #include "ListGraph.hpp"
 #include <vector>
 
