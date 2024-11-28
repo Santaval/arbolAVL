@@ -54,7 +54,7 @@ ListGraph Measurements::generate_random_graph(size_t vertices, double density) {
 }
 
 // Ejecutar y registrar la medición de un algoritmo
-void Measurements::run_measurement(const std::string& algorithm_name, const ListGraph& graph) {
+void Measurements::run_measurement(const std::string& algorithm_name, ListGraph& graph) {
     size_t vertices = graph.vertex_count;
     double density = 0.0;
     int edge_count = GraphFunctions::count_edges(graph);

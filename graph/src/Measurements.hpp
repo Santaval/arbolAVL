@@ -14,7 +14,7 @@ public:
     ~Measurements();
 
     // Medir y registrar el tiempo de un algoritmo
-    void run_measurement(const std::string& algorithm_name, const ListGraph& graph);
+    void run_measurement(const std::string& algorithm_name, ListGraph& graph);
 
     // Generar un grafo aleatorio
     static ListGraph generate_random_graph(size_t vertices, double density);
