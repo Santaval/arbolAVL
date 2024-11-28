@@ -1,0 +1,25 @@
+Algorithm,Vertices,Density,Time(ms)
+Count Edges,10,0,0.000261
+Count Adjacent Vertices,10,0,5e-05
+Is Connected (DFS),10,0,0.000401
+Is Connected (BFS),10,0,0.004589
+Dijkstra,10,0,0.000741
+Floyd-Warshall,10,0,0.002685
+Kruskal,10,0,0.000822
+Hamiltonian Path,10,0,333.959
+Count Edges,10,0.444444,0.00012
+Count Adjacent Vertices,10,0.444444,5e-05
+Is Connected (DFS),10,0.444444,0.001613
+Is Connected (BFS),10,0.444444,0.003096
+Dijkstra,10,0.444444,0.003246
+Floyd-Warshall,10,0.444444,0.006603
+Kruskal,10,0.444444,0.008166
+Hamiltonian Path,10,0.444444,415.076
+Count Edges,10,0.888889,0.000141
+Count Adjacent Vertices,10,0.888889,5e-05
+Is Connected (DFS),10,0.888889,0.002575
+Is Connected (BFS),10,0.888889,0.003446
+Dijkstra,10,0.888889,0.005089
+Floyd-Warshall,10,0.888889,0.006894
+Kruskal,10,0.888889,0.022263
+Hamiltonian Path,10,0.888889,871.894
