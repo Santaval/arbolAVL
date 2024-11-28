@@ -134,9 +134,6 @@ void GraphFunctions::floyd_warshall(const ListGraph& graph, double** distances) 
     }
 }
 
-// Los demás métodos (Dijkstra, Prim, Kruskal, Hamilton) seguirán el mismo patrón.
-// Por límite de espacio aquí, avísame si deseas que complete esos en detalle o necesites ayuda adicional.
-
 // 7. Caminos más cortos entre todo par de vértices usando Dijkstra
 void GraphFunctions::all_pairs_dijkstra(const ListGraph& graph, double** distances) {
     for (size_t i = 0; i < graph.vertex_count; ++i) {
