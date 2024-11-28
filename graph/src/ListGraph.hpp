@@ -42,21 +42,21 @@ public:
     ListGraph();
     ~ListGraph();
 
-    void clear();
+    void clear() override;
     void append_vertex(char element) override;
     void delete_vertex(Vertex vertex) override;
     void modify_element(Vertex vertex, char new_element) override;
-    char element(Vertex vertex) const;
+    char element(Vertex vertex) override;
 
-    void add_edge(Vertex v1, Vertex v2, double weight);
-    void delete_edge(Vertex v1, Vertex v2);
-    void modify_weight(Vertex v1, Vertex v2, double new_weight);
-    double weight(Vertex v1, Vertex v2) const;
+    void add_edge(Vertex v1, Vertex v2, double weight) override;
+    void delete_edge(Vertex v1, Vertex v2) override;
+    void modify_weight(Vertex v1, Vertex v2, double new_weight) override;
+    double weight(Vertex v1, Vertex v2) override;
 
-    Vertex first_vertex() const;
-    Vertex next_vertex(Vertex vertex) const;
-    Vertex first_adjacent_vertex(Vertex vertex) const;
-    Vertex next_adjacent_vertex(Vertex vertex, Vertex adj_vertex) const;
+    Vertex first_vertex() override;
+    Vertex next_vertex(Vertex vertex) override;
+    Vertex first_adyacent_vertex(Vertex vertex) override;
+    Vertex next_adyacent_vertex(Vertex vertex, Vertex adj_vertex) override;
 };
 
 #endif // LIST_GRAPH_HPP

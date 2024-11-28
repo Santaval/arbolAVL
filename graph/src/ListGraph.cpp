@@ -119,7 +119,7 @@ void ListGraph::modify_element(Vertex vertex, char new_element) {
     }
 }
 
-char ListGraph::element(Vertex vertex) const {
+char ListGraph::element(Vertex vertex) {
     if (vertex.number < (int)vertex_count) {
         return elements[vertex.number];
     }
@@ -176,7 +176,7 @@ void ListGraph::modify_weight(Vertex v1, Vertex v2, double new_weight) {
 }
 
 
-double ListGraph::weight(Vertex v1, Vertex v2) const {
+double ListGraph::weight(Vertex v1, Vertex v2) {
     for (size_t i = 0; i < adjacencyLists[v1.number].edge_count; ++i) {
         if (adjacencyLists[v1.number].edges[i].vertex.number == v2.number) {
             return adjacencyLists[v1.number].edges[i].weight;
@@ -185,19 +185,19 @@ double ListGraph::weight(Vertex v1, Vertex v2) const {
     return -1;
 }
 
-Vertex ListGraph::first_vertex() const {
+Vertex ListGraph::first_vertex() {
     return vertex_count > 0 ? adjacencyLists[0].vertex : Vertex(-1);
 }
 
-Vertex ListGraph::next_vertex(Vertex vertex) const {
+Vertex ListGraph::next_vertex(Vertex vertex) {
     return vertex.number + 1 < (int)vertex_count ? adjacencyLists[vertex.number + 1].vertex : Vertex(-1);
 }
 
-Vertex ListGraph::first_adjacent_vertex(Vertex vertex) const {
+Vertex ListGraph::first_adyacent_vertex(Vertex vertex) {
     return adjacencyLists[vertex.number].edge_count > 0 ? adjacencyLists[vertex.number].edges[0].vertex : Vertex(-1);
 }
 
-Vertex ListGraph::next_adjacent_vertex(Vertex vertex, Vertex adj_vertex) const {
+Vertex ListGraph::next_adyacent_vertex(Vertex vertex, Vertex adj_vertex) {
     const auto& list = adjacencyLists[vertex.number];
     for (size_t i = 0; i < list.edge_count; ++i) {
         if (list.edges[i].vertex.number == adj_vertex.number && i + 1 < list.edge_count) {
