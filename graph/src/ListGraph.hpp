@@ -32,7 +32,6 @@ class ListGraph : public Graph {
 public:
     AdjacencyList* adjacencyLists;
     char* elements;
-    size_t vertex_count;
     size_t vertex_capacity;
 
     void ensure_vertex_capacity();

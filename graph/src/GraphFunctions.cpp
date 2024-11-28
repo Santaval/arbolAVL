@@ -34,7 +34,8 @@ void dfs_helper(Graph& graph, Vertex v, bool* visited) {
 }
 
 bool GraphFunctions::is_connected_dfs(Graph& graph) {
-    int n = graph.vertex_count;
+    int n = graph.amount_vertex();
+    if (n == 0) return true;
     bool* visited = new bool[n]();
     dfs_helper(graph, graph.first_vertex(), visited);
     for (int i = 0; i < n; ++i) {

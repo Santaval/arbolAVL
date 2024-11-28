@@ -41,7 +41,7 @@ void AdjacencyList::remove_edge(Vertex v) {
 }
 
 // ListGraph methods
-ListGraph::ListGraph() : adjacencyLists(nullptr), elements(nullptr), vertex_count(0), vertex_capacity(0) {}
+ListGraph::ListGraph() : adjacencyLists(nullptr), elements(nullptr), vertex_capacity(0), Graph() {}
 
 ListGraph::~ListGraph() {
     clear();

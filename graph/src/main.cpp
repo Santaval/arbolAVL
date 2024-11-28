@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <string>
+
 #include "Measurements.hpp"
 #include "Graph.hpp"
 #include "ListGraph.hpp"
@@ -27,11 +30,12 @@ int main() {
     // Generar grafos y medir
     for (const auto& vertices : vertex_sizes) {
         for (const auto& density : densities) {
-            ListGraph graph;
-            measurements.generate_random_graph(&graph, vertices, density);
+            Graph* graph = new ListGraph();
+            measurements.generate_random_graph(graph, vertices, density);
             for (const auto& algorithm : algorithms) {
-                std::cout << "Measuring " << algorithm << " for " << vertices << " vertices, density " << density << "...\n";
-                measurements.run_measurement(algorithm, &graph);
+                std::cout << "Measuring " << algorithm << " for "
+                    << vertices<< " vertices, density " << density << "...\n";
+                measurements.run_measurement(algorithm, graph);
             }
         }
     }
