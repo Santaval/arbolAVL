@@ -4,7 +4,7 @@
 #include <limits>
 
 // 1. Contar aristas en el grafo
-int GraphFunctions::count_edges(const ListGraph& graph) {
+int GraphFunctions::count_edges(ListGraph& graph) {
     int edge_count = 0;
     for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
         edge_count += graph.adjacencyLists[v.number].edge_count;
@@ -13,22 +13,22 @@ int GraphFunctions::count_edges(const ListGraph& graph) {
 }
 
 // 2. Contar vértices adyacentes de un vértice dado
-int GraphFunctions::count_adjacent_vertices(const ListGraph& graph, Vertex v) {
+int GraphFunctions::count_adjacent_vertices(ListGraph& graph, Vertex v) {
     if (v.number >= (int)graph.vertex_count) return 0; // Vértice inválido
     return graph.adjacencyLists[v.number].edge_count;
 }
 
 // 3. Verificar si un grafo es conexo usando DFS
-void dfs_helper(const ListGraph& graph, Vertex v, bool* visited) {
+void dfs_helper(ListGraph& graph, Vertex v, bool* visited) {
     visited[v.number] = true;
-    for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+    for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
         if (!visited[adj.number]) {
             dfs_helper(graph, adj, visited);
         }
     }
 }
 
-bool GraphFunctions::is_connected_dfs(const ListGraph& graph) {
+bool GraphFunctions::is_connected_dfs(ListGraph& graph) {
     bool* visited = new bool[graph.vertex_count]();
     dfs_helper(graph, graph.first_vertex(), visited);
     for (size_t i = 0; i < graph.vertex_count; ++i) {
@@ -42,7 +42,7 @@ bool GraphFunctions::is_connected_dfs(const ListGraph& graph) {
 }
 
 // 4. Verificar si un grafo es conexo usando BFS
-bool GraphFunctions::is_connected_bfs(const ListGraph& graph) {
+bool GraphFunctions::is_connected_bfs(ListGraph& graph) {
     bool* visited = new bool[graph.vertex_count]();
     std::queue<Vertex> q;
 
@@ -53,7 +53,7 @@ bool GraphFunctions::is_connected_bfs(const ListGraph& graph) {
         Vertex v = q.front();
         q.pop();
 
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+        for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
             if (!visited[adj.number]) {
                 visited[adj.number] = true;
                 q.push(adj);
@@ -72,7 +72,7 @@ bool GraphFunctions::is_connected_bfs(const ListGraph& graph) {
 }
 
 // 5. Algoritmo de Dijkstra
-void GraphFunctions::dijkstra(const ListGraph& graph, Vertex source, double* distances) {
+void GraphFunctions::dijkstra(ListGraph& graph, Vertex source, double* distances) {
     bool* visited = new bool[graph.vertex_count]();
     for (size_t i = 0; i < graph.vertex_count; ++i) {
         distances[i] = std::numeric_limits<double>::infinity();
@@ -92,7 +92,7 @@ void GraphFunctions::dijkstra(const ListGraph& graph, Vertex source, double* dis
         if (current.number == -1) break;
         visited[current.number] = true;
 
-        for (Vertex adj = graph.first_adjacent_vertex(current); adj.number != -1; adj = graph.next_adjacent_vertex(current, adj)) {
+        for (Vertex adj = graph.first_adyacent_vertex(current); adj.number != -1; adj = graph.next_adyacent_vertex(current, adj)) {
             double weight = graph.weight(current, adj);
             if (!visited[adj.number] && distances[current.number] + weight < distances[adj.number]) {
                 distances[adj.number] = distances[current.number] + weight;
@@ -104,7 +104,7 @@ void GraphFunctions::dijkstra(const ListGraph& graph, Vertex source, double* dis
 }
 
 // 6. Algoritmo de Floyd-Warshall
-void GraphFunctions::floyd_warshall(const ListGraph& graph, double** distances) {
+void GraphFunctions::floyd_warshall(ListGraph& graph, double** distances) {
     size_t n = graph.vertex_count;
 
     for (size_t i = 0; i < n; ++i) {
@@ -118,7 +118,7 @@ void GraphFunctions::floyd_warshall(const ListGraph& graph, double** distances) 
     }
 
     for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+        for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
             distances[v.number][adj.number] = graph.weight(v, adj);
         }
     }
@@ -135,14 +135,14 @@ void GraphFunctions::floyd_warshall(const ListGraph& graph, double** distances) 
 }
 
 // 7. Caminos más cortos entre todo par de vértices usando Dijkstra
-void GraphFunctions::all_pairs_dijkstra(const ListGraph& graph, double** distances) {
+void GraphFunctions::all_pairs_dijkstra(ListGraph& graph, double** distances) {
     for (size_t i = 0; i < graph.vertex_count; ++i) {
         dijkstra(graph, Vertex(i), distances[i]);
     }
 }
 
 // 8. Prim para el árbol de mínimo costo
-void GraphFunctions::prim(const ListGraph& graph, int* parent) {
+void GraphFunctions::prim(ListGraph& graph, int* parent) {
     size_t n = graph.vertex_count;
     double* key = new double[n];
     bool* in_mst = new bool[n]();
@@ -169,7 +169,7 @@ void GraphFunctions::prim(const ListGraph& graph, int* parent) {
         in_mst[u] = true;
 
         // Actualizar las claves de los vértices adyacentes
-        for (Vertex adj = graph.first_adjacent_vertex(Vertex(u)); adj.number != -1; adj = graph.next_adjacent_vertex(Vertex(u), adj)) {
+        for (Vertex adj = graph.first_adyacent_vertex(Vertex(u)); adj.number != -1; adj = graph.next_adyacent_vertex(Vertex(u), adj)) {
             if (!in_mst[adj.number] && graph.weight(Vertex(u), adj) < key[adj.number]) {
                 key[adj.number] = graph.weight(Vertex(u), adj);
                 parent[adj.number] = u;
@@ -203,13 +203,13 @@ void union_vertices(int u, int v, int* parent, int* rank) {
     }
 }
 
-void GraphFunctions::kruskal(const ListGraph& graph, std::vector<EdgeDetail>& mst) {
+void GraphFunctions::kruskal(ListGraph& graph, std::vector<EdgeDetail>& mst) {
     size_t n = graph.vertex_count;
     std::vector<EdgeDetail> edges;
 
     // Obtener todas las aristas
     for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
-        for (Vertex adj = graph.first_adjacent_vertex(v); adj.number != -1; adj = graph.next_adjacent_vertex(v, adj)) {
+        for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
             if (v.number < adj.number) { // Evitar duplicados
                 edges.push_back({v.number, adj.number, graph.weight(v, adj)});
             }
@@ -245,7 +245,7 @@ void GraphFunctions::kruskal(const ListGraph& graph, std::vector<EdgeDetail>& ms
 
 
 // 10. Circuito Hamilton de menor costo (Búsqueda exhaustiva)
-double GraphFunctions::hamiltonian_path(const ListGraph& graph, std::vector<int>& best_path) {
+double GraphFunctions::hamiltonian_path(ListGraph& graph, std::vector<int>& best_path) {
     size_t n = graph.vertex_count;
     std::vector<int> vertices(n);
     for (size_t i = 0; i < n; ++i) {
