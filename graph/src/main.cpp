@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Measurements.hpp"
+#include "Graph.hpp"
 #include "ListGraph.hpp"
 
 int main() {

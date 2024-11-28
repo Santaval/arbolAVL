@@ -8,7 +8,7 @@
 #include "Graph.hpp"
 #include "Vertex.hpp"
 
-class MatrixGraph : public Graph<Vertex, char> {
+class MatrixGraph : public Graph {
   private:
   /**
    * @brief A 2D matrix represented as a vector of vectors of doubles.

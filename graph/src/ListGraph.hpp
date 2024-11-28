@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include "Vertex.hpp"
+#include "Graph.hpp"
 
 class Edge {
 public:
@@ -25,7 +26,7 @@ public:
     void remove_edge(Vertex v);
 };
 
-class ListGraph {
+class ListGraph : public Graph {
 // Por facilidad para que las funciones que trabajan sobre el grafo
 // puedan hacerlo con más facilidad
 public:
@@ -42,9 +43,9 @@ public:
     ~ListGraph();
 
     void clear();
-    void append_vertex(char element);
-    void delete_vertex(Vertex vertex);
-    void modify_element(Vertex vertex, char new_element);
+    void append_vertex(char element) override;
+    void delete_vertex(Vertex vertex) override;
+    void modify_element(Vertex vertex, char new_element) override;
     char element(Vertex vertex) const;
 
     void add_edge(Vertex v1, Vertex v2, double weight);

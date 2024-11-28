@@ -1,7 +1,7 @@
 // Copyright 2024 algoritmicos team. ECCI-UCR. CC BY 4.0
 #pragma once
+#include "Vertex.hpp"
 
-template <typename VertexType, typename ElementType>
 class Graph {
  protected:
   int size;
@@ -28,7 +28,7 @@ class Graph {
    *
    * @param element The element to be added as a vertex in the graph.
    */
-  virtual void append_vertex(ElementType element) = 0;
+  virtual void append_vertex(char element) = 0;
   /**
    * @brief Deletes a vertex from the graph.
    *
@@ -37,7 +37,7 @@ class Graph {
    *
    * @param vertex The vertex to be deleted.
    */
-  virtual void delete_vertex(VertexType vertex) = 0;
+  virtual void delete_vertex(Vertex vertex) = 0;
   /**
    * @brief Modifies the element associated with a given vertex.
    *
@@ -47,7 +47,7 @@ class Graph {
    * @param vertex The vertex whose associated element is to be modified.
    * @param newElement The new element to associate with the specified vertex.
    */
-  virtual void modify_element(VertexType vertex, ElementType newElement) = 0;
+  virtual void modify_element(Vertex vertex, char newElement) = 0;
   /**
    * @brief Retrieves the element associated with a given vertex.
    *
@@ -57,7 +57,7 @@ class Graph {
    * @param vertex The vertex whose associated element is to be retrieved.
    * @return The element associated with the specified vertex.
    */
-  virtual char element(VertexType vertex) = 0;
+  virtual char element(Vertex vertex) = 0;
   /**
    * @brief Adds an edge between two vertices with a specified weight.
    *
@@ -68,7 +68,7 @@ class Graph {
    * @param vertex2 The second vertex of the edge.
    * @param weight The weight of the edge.
    */
-  virtual void add_edge(VertexType vertex1, VertexType vertex2,
+  virtual void add_edge(Vertex vertex1, Vertex vertex2,
       double weight) = 0;
   /**
    * @brief Deletes an edge between two vertices in the graph.
@@ -79,7 +79,7 @@ class Graph {
    * @param vertex1 The first vertex of the edge to be deleted.
    * @param vertex2 The second vertex of the edge to be deleted.
    */
-  virtual void delete_edge(VertexType vertex1, VertexType vertex2) = 0;
+  virtual void delete_edge(Vertex vertex1, Vertex vertex2) = 0;
   /**
    * @brief Modifies the weight of the edge between two vertices.
    *
@@ -90,7 +90,7 @@ class Graph {
    * @param vertex2 The second vertex of the edge whose weight is to be modified.
    * @param newWeight The new weight to be assigned to the edge.
    */
-  virtual void modify_weight(VertexType vertex1, VertexType vertex2,
+  virtual void modify_weight(Vertex vertex1, Vertex vertex2,
       double newWeight) = 0;
   /**
    * @brief Pure virtual function to get the weight of the edge between two vertices.
@@ -102,7 +102,7 @@ class Graph {
    * @param vertex2 The second vertex of the edge.
    * @return double The weight of the edge between vertex1 and vertex2.
    */
-  virtual double weight(VertexType vertex1, VertexType vertex2) = 0;
+  virtual double weight(Vertex vertex1, Vertex vertex2) = 0;
   /**
    * @brief Retrieves the first vertex in the graph.
    *
@@ -110,9 +110,9 @@ class Graph {
    * return the first vertex in the graph. The definition of the "first"
    * vertex is dependent on the specific implementation of the graph.
    *
-   * @return VertexType The first vertex in the graph.
+   * @return Vertex The first vertex in the graph.
    */
-  virtual VertexType first_vertex() = 0;
+  virtual Vertex first_vertex() = 0;
   /**
    * @brief Get the next vertex in the graph.
    *
@@ -120,9 +120,9 @@ class Graph {
    * The specific behavior and order of traversal depend on the implementation.
    *
    * @param vertex The current vertex.
-   * @return VertexType The next vertex in the graph.
+   * @return Vertex The next vertex in the graph.
    */
-  virtual VertexType next_vertex(VertexType vertex) = 0;
+  virtual Vertex next_vertex(Vertex vertex) = 0;
   /**
    * @brief Get the first ady_vertex vertex of the given vertex.
    *
@@ -130,9 +130,9 @@ class Graph {
    * The definition of "first" is dependent on the specific implementation of the graph.
    *
    * @param vertex The vertex for which to find the first ady_vertex vertex.
-   * @return VertexType The first ady_vertex vertex.
+   * @return Vertex The first ady_vertex vertex.
    */
-  virtual VertexType first_adyacent_vertex(VertexType vertex) = 0;
+  virtual Vertex first_adyacent_vertex(Vertex vertex) = 0;
   /**
    * @brief Get the next ady_vertex vertex to the given vertex.
    *
@@ -142,10 +142,10 @@ class Graph {
    *
    * @param vertex The vertex for which to find the next ady_vertex vertex.
    * @param ady_vertex The current ady_vertex vertex.
-   * @return VertexType The next ady_vertex vertex.
+   * @return Vertex The next ady_vertex vertex.
    */
-  virtual VertexType next_adyacent_vertex(VertexType vertex,
-        VertexType ady_vertex) = 0;
+  virtual Vertex next_adyacent_vertex(Vertex vertex,
+        Vertex ady_vertex) = 0;
 
  public:
   /**
@@ -167,11 +167,3 @@ class Graph {
    */
   inline int amount_vertex() const { return size; }
 };
-
-template <typename VertexType, typename ElementType>
-Graph<VertexType, ElementType>::Graph(/* args */) {
-}
-
-template <typename VertexType, typename ElementType>
-Graph<VertexType, ElementType>::~Graph() {
-}
