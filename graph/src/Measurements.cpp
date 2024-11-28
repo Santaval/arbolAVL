@@ -53,7 +53,7 @@ Graph* Measurements::generate_random_graph(Graph* graph, size_t vertices, double
 
 // Ejecutar y registrar la medición de un algoritmo
 void Measurements::run_measurement(const std::string& algorithm_name, Graph* graph) {
-    size_t vertices = graph->vertex_count;
+    size_t vertices = graph->amount_vertex();
     double density = 0.0;
     int edge_count = GraphFunctions::count_edges(*graph);
     density = static_cast<double>(edge_count) / (vertices * (vertices - 1) / 2);

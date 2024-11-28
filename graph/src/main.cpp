@@ -5,6 +5,7 @@
 #include "Measurements.hpp"
 #include "Graph.hpp"
 #include "ListGraph.hpp"
+#include "MatrixGraph.hpp"
 
 int main() {
     // Crear el archivo de mediciones
@@ -37,6 +38,20 @@ int main() {
                     << vertices<< " vertices, density " << density << "...\n";
                 measurements.run_measurement(algorithm, graph);
             }
+            delete graph;
+        }
+    }
+
+     for (const auto& vertices : vertex_sizes) {
+        for (const auto& density : densities) {
+            Graph* graph = new MatrixGraph();
+            measurements.generate_random_graph(graph, vertices, density);
+            for (const auto& algorithm : algorithms) {
+                std::cout << "Measuring " << algorithm << " for "
+                    << vertices<< " vertices, density " << density << "...\n";
+                measurements.run_measurement(algorithm, graph);
+            }
+            delete graph;
         }
     }
 

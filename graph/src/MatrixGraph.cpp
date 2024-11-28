@@ -17,15 +17,18 @@ void MatrixGraph::append_vertex(char element) {
   this->increaseMatrixSize();
   // Update the matrix and elements
   this->elements.push_back(element);
-  this->size++;
+  this->vertex_count++;
 }
 
 
 
 void MatrixGraph::delete_vertex(Vertex vertex) {
-  this->decreaseMatrixSize();
-  this->size--;
+  if (vertex < 0 || vertex >= this->amount_vertex()) {
+    throw std::out_of_range("Invalid vertex index");
+  }
   this->elements.erase(this->elements.begin() + vertex);
+  this->decreaseMatrixSize(vertex);
+  this->vertex_count--;
 }
 
 void MatrixGraph::modify_element(Vertex vertex, char newElement) {
@@ -109,22 +112,28 @@ void MatrixGraph::increaseMatrixSize() {
   this->matrix = newMatrix;
 }
 
-void MatrixGraph::decreaseMatrixSize() {
-  // Allocate memory for the new matrix
+void MatrixGraph::decreaseMatrixSize(Vertex vertexToRemove) {
   int newSize = this->amount_vertex() - 1;
   double** newMatrix = new double*[newSize];
-
   for (int i = 0; i < newSize; i++) {
     newMatrix[i] = new double[newSize];
   }
+  int newRow = 0;
+  for (int oldRow = 0; oldRow < this->amount_vertex(); oldRow++) {
+    if (oldRow == vertexToRemove) continue;
 
-  // Copy the old matrix into the new matrix
-  this->copyMatrix(newMatrix, this->matrix, newSize);
+    int newCol = 0;
+    for (int oldCol = 0; oldCol < this->amount_vertex(); oldCol++) {
+      if (oldCol == vertexToRemove) continue;
 
+      newMatrix[newRow][newCol] = this->matrix[oldRow][oldCol];
+      newCol++;
+    }
+    newRow++;
+  }
   this->deleteMatrix();
   this->matrix = newMatrix;
 }
-
 void MatrixGraph::copyMatrix(double** newMatrix, double** oldMatrix, int size) {
   // Copy the old matrix into the new matrix
   for (int i = 0; i < size; i++) {

@@ -95,23 +95,37 @@ void ListGraph::append_vertex(char element) {
     adjacencyLists[vertex_count] = AdjacencyList();
     adjacencyLists[vertex_count].vertex = v;
 
-    ++vertex_count;
+    this->vertex_count++;
 }
 
 void ListGraph::delete_vertex(Vertex vertex) {
     size_t index = vertex.number;
 
     delete[] adjacencyLists[index].edges;
+
     for (size_t i = index; i < vertex_count - 1; ++i) {
         adjacencyLists[i] = adjacencyLists[i + 1];
         elements[i] = elements[i + 1];
     }
-    --vertex_count;
+
+    this->vertex_count--;
 
     for (size_t i = 0; i < vertex_count; ++i) {
         adjacencyLists[i].remove_edge(vertex);
+
+        update_edges_after_vertex_removal(adjacencyLists[i], index);
     }
 }
+
+void ListGraph::update_edges_after_vertex_removal(AdjacencyList& adjacencyList, size_t removed_index) {
+    for (size_t i = 0; i < adjacencyList.edge_count; ++i) {
+        if (adjacencyList.edges[i].vertex.number > (int)removed_index) {
+            --adjacencyList.edges[i].vertex.number;
+        }
+    }
+}
+
+
 
 void ListGraph::modify_element(Vertex vertex, char new_element) {
     if (vertex.number < (int)vertex_count) {

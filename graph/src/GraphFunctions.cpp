@@ -81,7 +81,7 @@ bool GraphFunctions::is_connected_bfs(Graph& graph) {
 
 // 5. Algoritmo de Dijkstra
 void GraphFunctions::dijkstra(Graph& graph, Vertex source, double* distances) {
-    int n = graph.vertex_count;
+    int n = graph.amount_vertex();
     bool* visited = new bool[n]();
     for (int i = 0; i < n; ++i) {
         distances[i] = std::numeric_limits<double>::infinity();
@@ -145,14 +145,14 @@ void GraphFunctions::floyd_warshall(Graph& graph, double** distances) {
 
 // 7. Caminos más cortos entre todo par de vértices usando Dijkstra
 void GraphFunctions::all_pairs_dijkstra(Graph& graph, double** distances) {
-    for (int i = 0; i < graph.vertex_count; ++i) {
+    for (int i = 0; i < graph.amount_vertex(); ++i) {
         dijkstra(graph, Vertex(i), distances[i]);
     }
 }
 
 // 8. Prim para el árbol de mínimo costo
 void GraphFunctions::prim(Graph& graph, int* parent) {
-    int n = graph.vertex_count;
+    int n = graph.amount_vertex();
     double* key = new double[n];
     bool* in_mst = new bool[n]();
 
@@ -173,6 +173,7 @@ void GraphFunctions::prim(Graph& graph, int* parent) {
             }
         }
 
+        if (u == -1) break;
         in_mst[u] = true;
 
         for (Vertex adj = graph.first_adyacent_vertex(Vertex(u)); adj.number != -1; adj = graph.next_adyacent_vertex(Vertex(u), adj)) {
@@ -248,7 +249,7 @@ void GraphFunctions::kruskal(Graph& graph, std::vector<EdgeDetail>& mst) {
 
 // 10. Circuito Hamilton de menor costo (Búsqueda exhaustiva)
 double GraphFunctions::hamiltonian_path(Graph& graph, std::vector<int>& best_path) {
-    int n = graph.vertex_count;
+    int n = graph.amount_vertex();
     std::vector<int> vertices(n);
     for (int i = 0; i < n; ++i) {
         vertices[i] = i;

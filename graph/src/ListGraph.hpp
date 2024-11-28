@@ -51,6 +51,7 @@ public:
     void delete_edge(Vertex v1, Vertex v2) override;
     void modify_weight(Vertex v1, Vertex v2, double new_weight) override;
     double weight(Vertex v1, Vertex v2) override;
+    void update_edges_after_vertex_removal(AdjacencyList& adjacencyList, size_t removed_index);
 
     Vertex first_vertex() override;
     Vertex next_vertex(Vertex vertex) override;

@@ -176,7 +176,7 @@ class MatrixGraph : public Graph {
 
   private:
     void increaseMatrixSize();
-    void decreaseMatrixSize();
+    void decreaseMatrixSize(Vertex vertex);
     void copyMatrix(double **newMatrix, double **oldMatrix, int size);
     void deleteMatrix();
 };

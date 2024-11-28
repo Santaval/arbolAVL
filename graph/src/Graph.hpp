@@ -5,7 +5,7 @@
 class Graph {
  public:
   int size = 0;
-  size_t vertex_count;
+  size_t vertex_count = 0;
 
  public:
     Graph() = default;
@@ -165,5 +165,5 @@ class Graph {
    *
    * @return int The number of vertices in the graph.
    */
-  inline int amount_vertex() const { return size; }
+  inline int amount_vertex() const { return vertex_count; }
 };
