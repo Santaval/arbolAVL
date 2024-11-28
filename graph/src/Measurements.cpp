@@ -28,12 +28,10 @@ double Measurements::measure_time(Func func) {
 }
 
 // Generar un grafo aleatorio
-ListGraph Measurements::generate_random_graph(size_t vertices, double density) {
-    ListGraph graph;
-
+Graph* Measurements::generate_random_graph(Graph* graph, size_t vertices, double density) {
     // Agregar vértices
     for (size_t i = 0; i < vertices; ++i) {
-        graph.append_vertex('A' + (i % 26)); // Etiquetas cíclicas A-Z
+        graph->append_vertex('A' + (i % 26)); // Etiquetas cíclicas A-Z
     }
 
     // Generador aleatorio para las aristas
@@ -45,7 +43,7 @@ ListGraph Measurements::generate_random_graph(size_t vertices, double density) {
     for (size_t i = 0; i < vertices; ++i) {
         for (size_t j = i + 1; j < vertices; ++j) {
             if (prob_dist(gen) < density) { // Agregar arista con probabilidad = densidad
-                graph.add_edge(Vertex(i), Vertex(j), weight_dist(gen));
+                graph->add_edge(Vertex(i), Vertex(j), weight_dist(gen));
             }
         }
     }
@@ -54,16 +52,16 @@ ListGraph Measurements::generate_random_graph(size_t vertices, double density) {
 }
 
 // Ejecutar y registrar la medición de un algoritmo
-void Measurements::run_measurement(const std::string& algorithm_name, ListGraph& graph) {
-    size_t vertices = graph.vertex_count;
+void Measurements::run_measurement(const std::string& algorithm_name, Graph* graph) {
+    size_t vertices = graph->vertex_count;
     double density = 0.0;
-    int edge_count = GraphFunctions::count_edges(graph);
+    int edge_count = GraphFunctions::count_edges(*graph);
     density = static_cast<double>(edge_count) / (vertices * (vertices - 1) / 2);
 
     if (algorithm_name == "Dijkstra") {
         double* distances = new double[vertices];
         double duration = measure_time([&]() {
-            GraphFunctions::dijkstra(graph, Vertex(0), distances);
+            GraphFunctions::dijkstra(*graph, Vertex(0), distances);
         });
         delete[] distances;
         output << "Dijkstra," << vertices << "," << density << "," << duration << "\n";
@@ -74,7 +72,7 @@ void Measurements::run_measurement(const std::string& algorithm_name, ListGraph&
             distances[i] = new double[vertices];
         }
         double duration = measure_time([&]() {
-            GraphFunctions::floyd_warshall(graph, distances);
+            GraphFunctions::floyd_warshall(*graph, distances);
         });
         for (size_t i = 0; i < vertices; ++i) {
             delete[] distances[i];
@@ -88,7 +86,7 @@ void Measurements::run_measurement(const std::string& algorithm_name, ListGraph&
             distances[i] = new double[vertices];
         }
         double duration = measure_time([&]() {
-            GraphFunctions::all_pairs_dijkstra(graph, distances);
+            GraphFunctions::all_pairs_dijkstra(*graph, distances);
         });
         for (size_t i = 0; i < vertices; ++i) {
             delete[] distances[i];
@@ -99,7 +97,7 @@ void Measurements::run_measurement(const std::string& algorithm_name, ListGraph&
     } else if (algorithm_name == "Prim") {
         int* parent = new int[vertices];
         double duration = measure_time([&]() {
-            GraphFunctions::prim(graph, parent);
+            GraphFunctions::prim(*graph, parent);
         });
         delete[] parent;
         output << "Prim," << vertices << "," << density << "," << duration << "\n";
@@ -107,41 +105,40 @@ void Measurements::run_measurement(const std::string& algorithm_name, ListGraph&
     } else if (algorithm_name == "Kruskal") {
         std::vector<GraphFunctions::EdgeDetail> mst;
         double duration = measure_time([&]() {
-            GraphFunctions::kruskal(graph, mst);
+            GraphFunctions::kruskal(*graph, mst);
         });
         output << "Kruskal," << vertices << "," << density << "," << duration << "\n";
 
     } else if (algorithm_name == "Hamiltonian Path") {
         std::vector<int> best_path;
         double duration = measure_time([&]() {
-            GraphFunctions::hamiltonian_path(graph, best_path);
+            GraphFunctions::hamiltonian_path(*graph, best_path);
         });
         output << "Hamiltonian Path," << vertices << "," << density << "," << duration << "\n";
 
     } else if (algorithm_name == "Is Connected (DFS)") {
         double duration = measure_time([&]() {
-            GraphFunctions::is_connected_dfs(graph);
+            GraphFunctions::is_connected_dfs(*graph);
         });
         output << "Is Connected (DFS)," << vertices << "," << density << "," << duration << "\n";
 
     } else if (algorithm_name == "Is Connected (BFS)") {
         double duration = measure_time([&]() {
-            GraphFunctions::is_connected_bfs(graph);
+            GraphFunctions::is_connected_bfs(*graph);
         });
         output << "Is Connected (BFS)," << vertices << "," << density << "," << duration << "\n";
 
     } else if (algorithm_name == "Count Edges") {
         double duration = measure_time([&]() {
-            GraphFunctions::count_edges(graph);
+            GraphFunctions::count_edges(*graph);
         });
         output << "Count Edges," << vertices << "," << density << "," << duration << "\n";
 
     } else if (algorithm_name == "Count Adjacent Vertices") {
         Vertex test_vertex(0);
         double duration = measure_time([&]() {
-            GraphFunctions::count_adjacent_vertices(graph, test_vertex);
+            GraphFunctions::count_adjacent_vertices(*graph, test_vertex);
         });
         output << "Count Adjacent Vertices," << vertices << "," << density << "," << duration << "\n";
     }
 }
-

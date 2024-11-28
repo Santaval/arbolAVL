@@ -4,22 +4,27 @@
 #include <limits>
 
 // 1. Contar aristas en el grafo
-int GraphFunctions::count_edges(ListGraph& graph) {
+int GraphFunctions::count_edges(Graph& graph) {
     int edge_count = 0;
     for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
-        edge_count += graph.adjacencyLists[v.number].edge_count;
+        for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
+            edge_count++;
+        }
     }
     return edge_count / 2; // Dividir entre 2 porque es no dirigido
 }
 
 // 2. Contar vértices adyacentes de un vértice dado
-int GraphFunctions::count_adjacent_vertices(ListGraph& graph, Vertex v) {
-    if (v.number >= (int)graph.vertex_count) return 0; // Vértice inválido
-    return graph.adjacencyLists[v.number].edge_count;
+int GraphFunctions::count_adjacent_vertices(Graph& graph, Vertex v) {
+    int count = 0;
+    for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
+        count++;
+    }
+    return count;
 }
 
 // 3. Verificar si un grafo es conexo usando DFS
-void dfs_helper(ListGraph& graph, Vertex v, bool* visited) {
+void dfs_helper(Graph& graph, Vertex v, bool* visited) {
     visited[v.number] = true;
     for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
         if (!visited[adj.number]) {
@@ -28,10 +33,11 @@ void dfs_helper(ListGraph& graph, Vertex v, bool* visited) {
     }
 }
 
-bool GraphFunctions::is_connected_dfs(ListGraph& graph) {
-    bool* visited = new bool[graph.vertex_count]();
+bool GraphFunctions::is_connected_dfs(Graph& graph) {
+    int n = graph.vertex_count;
+    bool* visited = new bool[n]();
     dfs_helper(graph, graph.first_vertex(), visited);
-    for (size_t i = 0; i < graph.vertex_count; ++i) {
+    for (int i = 0; i < n; ++i) {
         if (!visited[i]) {
             delete[] visited;
             return false;
@@ -42,8 +48,9 @@ bool GraphFunctions::is_connected_dfs(ListGraph& graph) {
 }
 
 // 4. Verificar si un grafo es conexo usando BFS
-bool GraphFunctions::is_connected_bfs(ListGraph& graph) {
-    bool* visited = new bool[graph.vertex_count]();
+bool GraphFunctions::is_connected_bfs(Graph& graph) {
+    int n = graph.vertex_count;
+    bool* visited = new bool[n]();
     std::queue<Vertex> q;
 
     q.push(graph.first_vertex());
@@ -61,7 +68,7 @@ bool GraphFunctions::is_connected_bfs(ListGraph& graph) {
         }
     }
 
-    for (size_t i = 0; i < graph.vertex_count; ++i) {
+    for (int i = 0; i < n; ++i) {
         if (!visited[i]) {
             delete[] visited;
             return false;
@@ -72,17 +79,18 @@ bool GraphFunctions::is_connected_bfs(ListGraph& graph) {
 }
 
 // 5. Algoritmo de Dijkstra
-void GraphFunctions::dijkstra(ListGraph& graph, Vertex source, double* distances) {
-    bool* visited = new bool[graph.vertex_count]();
-    for (size_t i = 0; i < graph.vertex_count; ++i) {
+void GraphFunctions::dijkstra(Graph& graph, Vertex source, double* distances) {
+    int n = graph.vertex_count;
+    bool* visited = new bool[n]();
+    for (int i = 0; i < n; ++i) {
         distances[i] = std::numeric_limits<double>::infinity();
     }
     distances[source.number] = 0;
 
-    for (size_t i = 0; i < graph.vertex_count; ++i) {
+    for (int i = 0; i < n; ++i) {
         Vertex current(-1);
         double min_distance = std::numeric_limits<double>::infinity();
-        for (size_t j = 0; j < graph.vertex_count; ++j) {
+        for (int j = 0; j < n; ++j) {
             if (!visited[j] && distances[j] < min_distance) {
                 current = Vertex(j);
                 min_distance = distances[j];
@@ -104,11 +112,11 @@ void GraphFunctions::dijkstra(ListGraph& graph, Vertex source, double* distances
 }
 
 // 6. Algoritmo de Floyd-Warshall
-void GraphFunctions::floyd_warshall(ListGraph& graph, double** distances) {
-    size_t n = graph.vertex_count;
+void GraphFunctions::floyd_warshall(Graph& graph, double** distances) {
+    int n = graph.vertex_count;
 
-    for (size_t i = 0; i < n; ++i) {
-        for (size_t j = 0; j < n; ++j) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
             if (i == j) {
                 distances[i][j] = 0.0;
             } else {
@@ -123,9 +131,9 @@ void GraphFunctions::floyd_warshall(ListGraph& graph, double** distances) {
         }
     }
 
-    for (size_t k = 0; k < n; ++k) {
-        for (size_t i = 0; i < n; ++i) {
-            for (size_t j = 0; j < n; ++j) {
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
                 if (distances[i][k] + distances[k][j] < distances[i][j]) {
                     distances[i][j] = distances[i][k] + distances[k][j];
                 }
@@ -135,31 +143,29 @@ void GraphFunctions::floyd_warshall(ListGraph& graph, double** distances) {
 }
 
 // 7. Caminos más cortos entre todo par de vértices usando Dijkstra
-void GraphFunctions::all_pairs_dijkstra(ListGraph& graph, double** distances) {
-    for (size_t i = 0; i < graph.vertex_count; ++i) {
+void GraphFunctions::all_pairs_dijkstra(Graph& graph, double** distances) {
+    for (int i = 0; i < graph.vertex_count; ++i) {
         dijkstra(graph, Vertex(i), distances[i]);
     }
 }
 
 // 8. Prim para el árbol de mínimo costo
-void GraphFunctions::prim(ListGraph& graph, int* parent) {
-    size_t n = graph.vertex_count;
+void GraphFunctions::prim(Graph& graph, int* parent) {
+    int n = graph.vertex_count;
     double* key = new double[n];
     bool* in_mst = new bool[n]();
 
-    // Inicializar claves y padres
-    for (size_t i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
         key[i] = std::numeric_limits<double>::infinity();
         parent[i] = -1;
     }
 
-    key[0] = 0.0; // Empezar desde el vértice 0
+    key[0] = 0.0;
 
-    for (size_t count = 0; count < n - 1; ++count) {
-        // Encontrar el vértice con la clave más pequeña que no está en el MST
+    for (int count = 0; count < n - 1; ++count) {
         double min_key = std::numeric_limits<double>::infinity();
         int u = -1;
-        for (size_t v = 0; v < n; ++v) {
+        for (int v = 0; v < n; ++v) {
             if (!in_mst[v] && key[v] < min_key) {
                 min_key = key[v];
                 u = v;
@@ -168,7 +174,6 @@ void GraphFunctions::prim(ListGraph& graph, int* parent) {
 
         in_mst[u] = true;
 
-        // Actualizar las claves de los vértices adyacentes
         for (Vertex adj = graph.first_adyacent_vertex(Vertex(u)); adj.number != -1; adj = graph.next_adyacent_vertex(Vertex(u), adj)) {
             if (!in_mst[adj.number] && graph.weight(Vertex(u), adj) < key[adj.number]) {
                 key[adj.number] = graph.weight(Vertex(u), adj);
@@ -184,7 +189,7 @@ void GraphFunctions::prim(ListGraph& graph, int* parent) {
 // 9. Kruskal para encontrar el árbol de expansión mínima
 int find_parent(int vertex, int* parent) {
     if (parent[vertex] != vertex) {
-        parent[vertex] = find_parent(parent[vertex], parent); // Compresión de ruta
+        parent[vertex] = find_parent(parent[vertex], parent);
     }
     return parent[vertex];
 }
@@ -203,20 +208,18 @@ void union_vertices(int u, int v, int* parent, int* rank) {
     }
 }
 
-void GraphFunctions::kruskal(ListGraph& graph, std::vector<EdgeDetail>& mst) {
-    size_t n = graph.vertex_count;
+void GraphFunctions::kruskal(Graph& graph, std::vector<EdgeDetail>& mst) {
+    int n = graph.vertex_count;
     std::vector<EdgeDetail> edges;
 
-    // Obtener todas las aristas
     for (Vertex v = graph.first_vertex(); v.number != -1; v = graph.next_vertex(v)) {
         for (Vertex adj = graph.first_adyacent_vertex(v); adj.number != -1; adj = graph.next_adyacent_vertex(v, adj)) {
-            if (v.number < adj.number) { // Evitar duplicados
+            if (v.number < adj.number) {
                 edges.push_back({v.number, adj.number, graph.weight(v, adj)});
             }
         }
     }
 
-    // Ordenar aristas por peso
     std::sort(edges.begin(), edges.end(), [](const EdgeDetail& a, const EdgeDetail& b) {
         return a.weight < b.weight;
     });
@@ -224,16 +227,15 @@ void GraphFunctions::kruskal(ListGraph& graph, std::vector<EdgeDetail>& mst) {
     int* parent = new int[n];
     int* rank = new int[n]();
 
-    for (size_t i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
         parent[i] = i;
     }
 
-    // Construir el MST
     for (const auto& edge : edges) {
         int root_u = find_parent(edge.u, parent);
         int root_v = find_parent(edge.v, parent);
 
-        if (root_u != root_v) { // Si no forman un ciclo
+        if (root_u != root_v) {
             mst.push_back(edge);
             union_vertices(root_u, root_v, parent, rank);
         }
@@ -243,12 +245,11 @@ void GraphFunctions::kruskal(ListGraph& graph, std::vector<EdgeDetail>& mst) {
     delete[] rank;
 }
 
-
 // 10. Circuito Hamilton de menor costo (Búsqueda exhaustiva)
-double GraphFunctions::hamiltonian_path(ListGraph& graph, std::vector<int>& best_path) {
-    size_t n = graph.vertex_count;
+double GraphFunctions::hamiltonian_path(Graph& graph, std::vector<int>& best_path) {
+    int n = graph.vertex_count;
     std::vector<int> vertices(n);
-    for (size_t i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
         vertices[i] = i;
     }
 
@@ -257,17 +258,15 @@ double GraphFunctions::hamiltonian_path(ListGraph& graph, std::vector<int>& best
         double cost = 0.0;
         bool valid_path = true;
 
-        // Calcular el costo del circuito actual
-        for (size_t i = 0; i < n - 1; ++i) {
+        for (int i = 0; i < n - 1; ++i) {
             double weight = graph.weight(Vertex(vertices[i]), Vertex(vertices[i + 1]));
-            if (weight < 0) { // Si no hay conexión, camino no válido
+            if (weight < 0) {
                 valid_path = false;
                 break;
             }
             cost += weight;
         }
 
-        // Considerar el regreso al inicio para formar un circuito
         if (valid_path) {
             double return_weight = graph.weight(Vertex(vertices[n - 1]), Vertex(vertices[0]));
             if (return_weight < 0) {
@@ -277,10 +276,9 @@ double GraphFunctions::hamiltonian_path(ListGraph& graph, std::vector<int>& best
             }
         }
 
-        // Actualizar el costo mínimo si el camino es válido
         if (valid_path && cost < min_cost) {
             min_cost = cost;
-            best_path = vertices; // Guardar la mejor ruta
+            best_path = vertices;
         }
 
     } while (std::next_permutation(vertices.begin(), vertices.end()));

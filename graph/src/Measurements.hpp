@@ -4,20 +4,19 @@
 #include <chrono>
 #include <string>
 #include <fstream>
-#include "ListGraph.hpp"
-#include "GraphFunctions.hpp"
+#include "Graph.hpp" // Clase base abstracta para ListGraph y MatrixGraph
+#include "GraphFunctions.hpp" // Funciones independientes que trabajan con Graph
 
 class Measurements {
 public:
-    // Constructor y destructor
     Measurements(const std::string& output_file);
     ~Measurements();
 
     // Medir y registrar el tiempo de un algoritmo
-    void run_measurement(const std::string& algorithm_name, ListGraph& graph);
+    void run_measurement(const std::string& algorithm_name, Graph* graph);
 
     // Generar un grafo aleatorio
-    static ListGraph generate_random_graph(size_t vertices, double density);
+    static Graph* generate_random_graph(Graph* graph, size_t vertices, double density);
 
 private:
     std::ofstream output; // Archivo para guardar resultados
@@ -28,4 +27,3 @@ private:
 };
 
 #endif // MEASUREMENTS_HPP
-
