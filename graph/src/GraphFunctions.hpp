@@ -5,11 +5,6 @@
 #include <vector>
 #include <limits>
 
-struct EdgeDetail {
-    int u, v;
-    double weight;
-};
-
 class GraphFunctions {
 public:
     static int count_edges(Graph& graph);
@@ -20,6 +15,11 @@ public:
     static void floyd_warshall(Graph& graph, double** distances);
     static void all_pairs_dijkstra(Graph& graph, double** distances);
     static void prim(Graph& graph, int* parent);
+
+    struct EdgeDetail {
+    int u, v;
+    double weight;
+    };
     static void kruskal(Graph& graph, std::vector<EdgeDetail>& mst);
     static double hamiltonian_path(Graph& graph, std::vector<int>& best_path);
 };
