@@ -7,9 +7,8 @@ class Graph {
   int size;
 
  public:
-  Graph();
-  ~Graph();
-
+    Graph() = default;
+    virtual ~Graph() = default;
  protected:
   /**
    * @brief Clears the graph, removing all vertices and edges.
