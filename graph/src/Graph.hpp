@@ -3,13 +3,14 @@
 #include "Vertex.hpp"
 
 class Graph {
- protected:
+ public:
   int size;
+  size_t vertex_count;
 
  public:
     Graph() = default;
     virtual ~Graph() = default;
- protected:
+ public:
   /**
    * @brief Clears the graph, removing all vertices and edges.
    *
