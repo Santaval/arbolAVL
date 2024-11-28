@@ -1,38 +1,37 @@
 #include <iostream>
+#include "Measurements.hpp"
 #include "ListGraph.hpp"
-#include "GraphFunctions.hpp"
 
 int main() {
-    // Crear un grafo con algunos vértices
-    ListGraph graph;
-    graph.append_vertex('A');
-    graph.append_vertex('B');
-    graph.append_vertex('C');
-    graph.append_vertex('D');
+    // Crear el archivo de mediciones
+    Measurements measurements("measurements.csv");
 
-    graph.add_edge(Vertex(0), Vertex(1), 10.0);
-    graph.add_edge(Vertex(0), Vertex(2), 15.0);
-    graph.add_edge(Vertex(1), Vertex(2), 35.0);
-    graph.add_edge(Vertex(1), Vertex(3), 25.0);
-    graph.add_edge(Vertex(2), Vertex(3), 30.0);
+    // Algoritmos que se van a medir
+    std::vector<std::string> algorithms = {
+        "Count Edges",
+        "Count Adjacent Vertices",
+        "Is Connected (DFS)",
+        "Is Connected (BFS)",
+        "Dijkstra",
+        "Floyd-Warshall",
+        "Kruskal",
+        "Hamiltonian Path"
+    };
 
-    // Kruskal
-    std::vector<GraphFunctions::EdgeDetail> mst;
-    GraphFunctions::kruskal(graph, mst);
-    std::cout << "MST (Kruskal):" << std::endl;
-    for (const auto& edge : mst) {
-        std::cout << edge.u << " -- " << edge.v << " : " << edge.weight << std::endl;
+    std::vector<size_t> vertex_sizes = {10};
+    std::vector<double> densities = {0.1, 0.5, 0.9};
+
+    // Generar grafos y medir
+    for (const auto& vertices : vertex_sizes) {
+        for (const auto& density : densities) {
+            ListGraph graph = measurements.generate_random_graph(vertices, density);
+            for (const auto& algorithm : algorithms) {
+                std::cout << "Measuring " << algorithm << " for " << vertices << " vertices, density " << density << "...\n";
+                measurements.run_measurement(algorithm, graph);
+            }
+        }
     }
 
-    // Hamilton
-    std::vector<int> best_path;
-    double min_cost = GraphFunctions::hamiltonian_path(graph, best_path);
-    std::cout << "Circuito Hamilton de menor costo: " << min_cost << std::endl;
-    std::cout << "Ruta: ";
-    for (int v : best_path) {
-        std::cout << v << " ";
-    }
-    std::cout << std::endl;
-
+    std::cout << "Mediciones completadas. Resultados guardados en measurements.csv\n";
     return 0;
 }
