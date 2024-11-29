@@ -1,0 +1,109 @@
+Algorithm,Vertices,Density,Time(ms)
+Count Edges,5,0.1,0.000321
+Count Adjacent Vertices,5,0.1,0.00011
+Is Connected (DFS),5,0.1,0.001694
+Is Connected (BFS),5,0.1,0.001213
+Dijkstra,5,0.1,0.000641
+Floyd-Warshall,5,0.1,0.000951
+All Pairs Dijkstra,5,0.1,0.001222
+Prim,5,0.1,0.000691
+Kruskal,5,0.1,0.003387
+Count Edges,5,0.1,0.000341
+Count Adjacent Vertices,5,0.1,7.1e-05
+Is Connected (DFS),5,0.1,0.000231
+Is Connected (BFS),5,0.1,0.000291
+Dijkstra,5,0.1,0.00025
+Floyd-Warshall,5,0.1,0.000922
+All Pairs Dijkstra,5,0.1,0.001593
+Prim,5,0.1,0.00027
+Kruskal,5,0.1,0.000782
+Count Edges,5,1,0.00036
+Count Adjacent Vertices,5,1,0.00023
+Is Connected (DFS),5,1,0.000892
+Is Connected (BFS),5,1,0.001202
+Dijkstra,5,1,0.001493
+Floyd-Warshall,5,1,0.001263
+All Pairs Dijkstra,5,1,0.004639
+Prim,5,1,0.001282
+Kruskal,5,1,0.002235
+Count Edges,10,0.1,0.00026
+Count Adjacent Vertices,10,0.1,6e-05
+Is Connected (DFS),10,0.1,0.00022
+Is Connected (BFS),10,0.1,0.005451
+Dijkstra,10,0.1,0.000381
+Floyd-Warshall,10,0.1,0.002605
+All Pairs Dijkstra,10,0.1,0.002565
+Prim,10,0.1,0.000371
+Kruskal,10,0.1,0.001182
+Count Edges,10,0.6,0.000862
+Count Adjacent Vertices,10,0.6,0.000241
+Is Connected (DFS),10,0.6,0.001583
+Is Connected (BFS),10,0.6,0.001463
+Dijkstra,10,0.6,0.003006
+Floyd-Warshall,10,0.6,0.005561
+All Pairs Dijkstra,10,0.6,0.022182
+Prim,10,0.6,0.002855
+Kruskal,10,0.6,0.004259
+Count Edges,10,1,0.001463
+Count Adjacent Vertices,10,1,0.000421
+Is Connected (DFS),10,1,0.002736
+Is Connected (BFS),10,1,0.002615
+Dijkstra,10,1,0.005149
+Floyd-Warshall,10,1,0.005982
+All Pairs Dijkstra,10,1,0.036088
+Prim,10,1,0.004749
+Kruskal,10,1,0.007955
+Count Edges,100,0.1,0.013365
+Count Adjacent Vertices,100,0.1,0.00035
+Is Connected (DFS),100,0.1,0.017613
+Is Connected (BFS),100,0.1,0.017854
+Dijkstra,100,0.1,0.069652
+Floyd-Warshall,100,0.1,1.39305
+All Pairs Dijkstra,100,0.1,6.64145
+Prim,100,0.1,0.059763
+Kruskal,100,0.1,0.064102
+Count Edges,100,0.6,0.145095
+Count Adjacent Vertices,100,0.6,0.001984
+Is Connected (DFS),100,0.6,0.133343
+Is Connected (BFS),100,0.6,0.132722
+Dijkstra,100,0.6,0.465914
+Floyd-Warshall,100,0.6,2.22816
+All Pairs Dijkstra,100,0.6,48.5152
+Prim,100,0.6,0.330417
+Kruskal,100,0.6,0.49517
+Count Edges,100,1,0.64771
+Count Adjacent Vertices,100,1,0.005471
+Is Connected (DFS),100,1,0.608585
+Is Connected (BFS),100,1,0.686643
+Dijkstra,100,1,1.09011
+Floyd-Warshall,100,1,2.5574
+All Pairs Dijkstra,100,1,124.903
+Prim,100,1,0.888005
+Kruskal,100,1,1.77486
+Count Edges,1000,0.1,6.45692
+Count Adjacent Vertices,1000,0.1,0.007635
+Is Connected (DFS),1000,0.1,7.732
+Is Connected (BFS),1000,0.1,6.89733
+Dijkstra,1000,0.1,13.2342
+Floyd-Warshall,1000,0.1,1534
+All Pairs Dijkstra,1000,0.1,11987.8
+Prim,1000,0.1,10.3705
+Kruskal,1000,0.1,14.6615
+Count Edges,1000,0.6,122.327
+Count Adjacent Vertices,1000,0.6,0.082767
+Is Connected (DFS),1000,0.6,93.311
+Is Connected (BFS),1000,0.6,82.982
+Dijkstra,1000,0.6,140.394
+Floyd-Warshall,1000,0.6,977.209
+All Pairs Dijkstra,1000,0.6,158901
+Prim,1000,0.6,115.002
+Kruskal,1000,0.6,186.885
+Count Edges,1000,1,336.724
+Count Adjacent Vertices,1000,1,0.309016
+Is Connected (DFS),1000,1,332.268
+Is Connected (BFS),1000,1,349.919
+Dijkstra,1000,1,615.317
+Floyd-Warshall,1000,1,1751.03
+All Pairs Dijkstra,1000,1,550481
+Prim,1000,1,502.597
+Kruskal,1000,1,515.869

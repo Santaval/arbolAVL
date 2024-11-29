@@ -22,11 +22,10 @@ int main() {
         "All Pairs Dijkstra",
         "Prim",
         "Kruskal",
-        "Hamiltonian Path"
     };
 
-    std::vector<size_t> vertex_sizes = {10};
-    std::vector<double> densities = {0.9};
+    std::vector<size_t> vertex_sizes = {5,10,100, 1000};
+    std::vector<double> densities = {0.1, 0.5, 1.0};
 
     // Generar grafos y medir
     for (const auto& vertices : vertex_sizes) {

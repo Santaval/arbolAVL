@@ -38,7 +38,14 @@ class MatrixGraph : public Graph {
    * This destructor is responsible for cleaning up any resources
    * allocated by the MatrixGraph instance.
    */
-  ~MatrixGraph() {}
+  ~MatrixGraph() {
+    this->clear();
+    // Free the memory allocated for the matrix
+    for (int i = 0; i < this->amount_vertex(); i++) {
+      delete[] this->matrix[i];
+    }
+    delete[] this->matrix;
+  }
   /**
    * @brief Clears the graph, removing all vertices and edges.
    *

@@ -3,11 +3,6 @@
 #include <iostream>
 
 void MatrixGraph::clear() {
-  // Free the memory allocated for the matrix
-  for (int i = 0; i < this->amount_vertex(); i++) {
-    delete[] this->matrix[i];
-  }
-  delete[] this->matrix;
   // Clear the elements vector
   this->elements.clear();
 }
@@ -84,7 +79,7 @@ Vertex MatrixGraph::first_adyacent_vertex(Vertex vertex) {
 Vertex MatrixGraph::next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) {
   for (int i = ady_vertex + 1; i < this->amount_vertex(); i++) {
     if (this->matrix[vertex][i] != -1) {
-      // return i;
+      return Vertex(i);
     }
   }
   return Vertex();
@@ -145,7 +140,7 @@ void MatrixGraph::copyMatrix(double** newMatrix, double** oldMatrix, int size) {
 
 void MatrixGraph::deleteMatrix() {
   // Free the memory allocated for the matrix
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < this->amount_vertex(); i++) {
     delete[] this->matrix[i];
   }
   delete[] this->matrix;

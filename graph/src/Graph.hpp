@@ -4,7 +4,6 @@
 
 class Graph {
  public:
-  int size = 0;
   size_t vertex_count = 0;
 
  public:
