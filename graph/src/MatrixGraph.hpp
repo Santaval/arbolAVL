@@ -38,14 +38,7 @@ class MatrixGraph : public Graph {
    * This destructor is responsible for cleaning up any resources
    * allocated by the MatrixGraph instance.
    */
-  ~MatrixGraph() {
-    this->clear();
-    // Free the memory allocated for the matrix
-    for (int i = 0; i < this->amount_vertex(); i++) {
-      delete[] this->matrix[i];
-    }
-    delete[] this->matrix;
-  }
+  ~MatrixGraph() {}
   /**
  * @brief Clears the graph, removing all vertices and edges.
  *
@@ -200,7 +193,7 @@ void increaseMatrixSize();
  * @modifica Libera la matriz actual, crea una nueva más pequeña y copia los elementos necesarios.
  * @efecto La matriz de adyacencia reduce su tamaño, eliminando las filas y columnas correspondientes a vértices eliminados.
  */
-void decreaseMatrixSize();
+void decreaseMatrixSize(Vertex vertexToRemove);
 
 /**
  * @brief Copies the contents of one matrix to another.
