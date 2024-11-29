@@ -9,160 +9,141 @@ class Graph {
  public:
     Graph() = default;
     virtual ~Graph() = default;
- public:
-  /**
-   * @brief Clears the graph, removing all vertices and edges.
-   *
-   * This function will reset the graph to an empty state, removing all
-   * vertices and edges that have been added. It is a pure virtual function,
-   * meaning that it must be implemented by any derived class.
-   */
-  virtual void clear() = 0;
-  /**
-   * @brief Appends a vertex with the given element to the graph.
-   *
-   * This function adds a new vertex containing the specified element to the graph.
-   * The exact behavior of this function depends on the specific implementation
-   * of the derived class.
-   *
-   * @param element The element to be added as a vertex in the graph.
-   */
-  virtual void append_vertex(char element) = 0;
-  /**
-   * @brief Deletes a vertex from the graph.
-   *
-   * This function removes the specified vertex from the graph.
-   * Any edges connected to this vertex will also be removed.
-   *
-   * @param vertex The vertex to be deleted.
-   */
-  virtual void delete_vertex(Vertex vertex) = 0;
-  /**
-   * @brief Modifies the element associated with a given vertex.
-   *
-   * This pure virtual function updates the element stored at the specified vertex
-   * with a new element provided as an argument.
-   *
-   * @param vertex The vertex whose associated element is to be modified.
-   * @param newElement The new element to associate with the specified vertex.
-   */
-  virtual void modify_element(Vertex vertex, char newElement) = 0;
-  /**
-   * @brief Retrieves the element associated with a given vertex.
-   *
-   * This pure virtual function must be implemented by derived classes to
-   * return the element corresponding to the specified vertex.
-   *
-   * @param vertex The vertex whose associated element is to be retrieved.
-   * @return The element associated with the specified vertex.
-   */
-  virtual char element(Vertex vertex) = 0;
-  /**
-   * @brief Adds an edge between two vertices with a specified weight.
-   *
-   * This pure virtual function must be implemented by derived classes to
-   * add an edge between the given vertices with the specified weight.
-   *
-   * @param vertex1 The first vertex of the edge.
-   * @param vertex2 The second vertex of the edge.
-   * @param weight The weight of the edge.
-   */
-  virtual void add_edge(Vertex vertex1, Vertex vertex2,
-      double weight) = 0;
-  /**
-   * @brief Deletes an edge between two vertices in the graph.
-   *
-   * This function removes the edge connecting the specified vertices
-   * from the graph. If the edge does not exist, the graph remains unchanged.
-   *
-   * @param vertex1 The first vertex of the edge to be deleted.
-   * @param vertex2 The second vertex of the edge to be deleted.
-   */
-  virtual void delete_edge(Vertex vertex1, Vertex vertex2) = 0;
-  /**
-   * @brief Modifies the weight of the edge between two vertices.
-   *
-   * This function updates the weight of the edge connecting the specified vertices
-   * to the new weight provided.
-   *
-   * @param vertex1 The first vertex of the edge whose weight is to be modified.
-   * @param vertex2 The second vertex of the edge whose weight is to be modified.
-   * @param newWeight The new weight to be assigned to the edge.
-   */
-  virtual void modify_weight(Vertex vertex1, Vertex vertex2,
-      double newWeight) = 0;
-  /**
-   * @brief Pure virtual function to get the weight of the edge between two vertices.
-   *
-   * This function should be overridden in derived classes to provide the specific
-   * implementation for retrieving the weight of the edge connecting vertex1 and vertex2.
-   *
-   * @param vertex1 The first vertex of the edge.
-   * @param vertex2 The second vertex of the edge.
-   * @return double The weight of the edge between vertex1 and vertex2.
-   */
-  virtual double weight(Vertex vertex1, Vertex vertex2) = 0;
-  /**
-   * @brief Retrieves the first vertex in the graph.
-   *
-   * This pure virtual function must be implemented by derived classes to
-   * return the first vertex in the graph. The definition of the "first"
-   * vertex is dependent on the specific implementation of the graph.
-   *
-   * @return Vertex The first vertex in the graph.
-   */
-  virtual Vertex first_vertex() = 0;
-  /**
-   * @brief Get the next vertex in the graph.
-   *
-   * This function returns the next vertex in the graph relative to the given vertex.
-   * The specific behavior and order of traversal depend on the implementation.
-   *
-   * @param vertex The current vertex.
-   * @return Vertex The next vertex in the graph.
-   */
-  virtual Vertex next_vertex(Vertex vertex) = 0;
-  /**
-   * @brief Get the first ady_vertex vertex of the given vertex.
-   *
-   * This function returns the first vertex that is ady_vertex to the specified vertex.
-   * The definition of "first" is dependent on the specific implementation of the graph.
-   *
-   * @param vertex The vertex for which to find the first ady_vertex vertex.
-   * @return Vertex The first ady_vertex vertex.
-   */
-  virtual Vertex first_adyacent_vertex(Vertex vertex) = 0;
-  /**
-   * @brief Get the next ady_vertex vertex to the given vertex.
-   *
-   * This function returns the next ady_vertex vertex to the specified vertex
-   * in the graph. If there are no more ady_vertex vertices, the function
-   * should return a value indicating the end (implementation-specific).
-   *
-   * @param vertex The vertex for which to find the next ady_vertex vertex.
-   * @param ady_vertex The current ady_vertex vertex.
-   * @return Vertex The next ady_vertex vertex.
-   */
-  virtual Vertex next_adyacent_vertex(Vertex vertex,
-        Vertex ady_vertex) = 0;
 
  public:
   /**
-   * @brief Checks if the graph is empty.
-   *
-   * This function returns true if the graph has no vertices,
-   * otherwise it returns false.
-   *
-   * @return true if the graph is empty, false otherwise.
+   * @brief Limpia el grafo, eliminando todos los vértices y aristas.
+   * 
+   * Requiere: Ninguna.
+   * Modifica: Este objeto.
+   * Efecto: Resetea el grafo a un estado vacío.
+   */
+  virtual void clear() = 0;
+
+  /**
+   * @brief Agrega un vértice con el elemento dado al grafo.
+   * 
+   * Requiere: `element` es un carácter válido.
+   * Modifica: Este objeto.
+   * Efecto: Añade un nuevo vértice al grafo con el elemento especificado.
+   */
+  virtual void append_vertex(char element) = 0;
+
+  /**
+   * @brief Elimina un vértice del grafo.
+   * 
+   * Requiere: `vertex` existe en el grafo.
+   * Modifica: Este objeto.
+   * Efecto: Elimina el vértice y todas las aristas asociadas a él.
+   */
+  virtual void delete_vertex(Vertex vertex) = 0;
+
+  /**
+   * @brief Modifica el elemento asociado a un vértice.
+   * 
+   * Requiere: `vertex` existe en el grafo.
+   * Modifica: El contenido del vértice especificado.
+   * Efecto: Actualiza el elemento del vértice con el nuevo valor.
+   */
+  virtual void modify_element(Vertex vertex, char newElement) = 0;
+
+  /**
+   * @brief Obtiene el elemento asociado a un vértice.
+   * 
+   * Requiere: `vertex` existe en el grafo.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el elemento asociado al vértice.
+   */
+  virtual char element(Vertex vertex) = 0;
+
+  /**
+   * @brief Añade una arista entre dos vértices con un peso especificado.
+   * 
+   * Requiere: Ambos vértices existen en el grafo.
+   * Modifica: Este objeto.
+   * Efecto: Agrega una arista con el peso indicado entre los vértices.
+   */
+  virtual void add_edge(Vertex vertex1, Vertex vertex2, double weight) = 0;
+
+  /**
+   * @brief Elimina una arista entre dos vértices.
+   * 
+   * Requiere: Ambos vértices existen en el grafo.
+   * Modifica: Este objeto.
+   * Efecto: Remueve la arista entre los vértices especificados.
+   */
+  virtual void delete_edge(Vertex vertex1, Vertex vertex2) = 0;
+
+  /**
+   * @brief Modifica el peso de la arista entre dos vértices.
+   * 
+   * Requiere: Ambos vértices y su arista existen en el grafo.
+   * Modifica: Este objeto.
+   * Efecto: Actualiza el peso de la arista entre los vértices.
+   */
+  virtual void modify_weight(Vertex vertex1, Vertex vertex2, double newWeight) = 0;
+
+  /**
+   * @brief Obtiene el peso de la arista entre dos vértices.
+   * 
+   * Requiere: Ambos vértices existen y están conectados por una arista.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el peso de la arista entre los vértices.
+   */
+  virtual double weight(Vertex vertex1, Vertex vertex2) = 0;
+
+  /**
+   * @brief Obtiene el primer vértice del grafo.
+   * 
+   * Requiere: El grafo no está vacío.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el primer vértice del grafo.
+   */
+  virtual Vertex first_vertex() = 0;
+
+  /**
+   * @brief Obtiene el siguiente vértice en el grafo.
+   * 
+   * Requiere: `vertex` existe en el grafo.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el siguiente vértice en el grafo.
+   */
+  virtual Vertex next_vertex(Vertex vertex) = 0;
+
+  /**
+   * @brief Obtiene el primer vértice adyacente al vértice dado.
+   * 
+   * Requiere: `vertex` existe en el grafo.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el primer vértice adyacente al vértice especificado.
+   */
+  virtual Vertex first_adyacent_vertex(Vertex vertex) = 0;
+
+  /**
+   * @brief Obtiene el siguiente vértice adyacente al vértice dado.
+   * 
+   * Requiere: `vertex` y `ady_vertex` existen en el grafo.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el siguiente vértice adyacente al vértice dado.
+   */
+  virtual Vertex next_adyacent_vertex(Vertex vertex, Vertex ady_vertex) = 0;
+
+ public:
+  /**
+   * @brief Verifica si el grafo está vacío.
+   * 
+   * Requiere: Ninguna.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve true si el grafo no tiene vértices; false en caso contrario.
    */
   inline bool empty() const { return this->amount_vertex() == 0; }
+
   /**
-   * @brief Get the number of vertices in the graph.
-   *
-   * This function returns the total number of vertices currently present
-   * in the graph.
-   *
-   * @return int The number of vertices in the graph.
+   * @brief Obtiene la cantidad de vértices en el grafo.
+   * 
+   * Requiere: Ninguna.
+   * Modifica: Ninguna.
+   * Efecto: Devuelve el número total de vértices en el grafo.
    */
   inline int amount_vertex() const { return vertex_count; }
 };
